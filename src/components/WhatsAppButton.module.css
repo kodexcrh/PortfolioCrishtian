@@ -1,0 +1,86 @@
+.btn {
+  position: fixed;
+  bottom: 96px; /* encima del ScrollToTop que está en 32px + 48px + 16px */
+  right: 28px;
+  z-index: 150;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1),
+              box-shadow .3s ease,
+              opacity .4s ease,
+              visibility .4s ease;
+  position: fixed;
+}
+
+.btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 28px rgba(37,211,102,.65);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* Visible */
+.visible {
+  opacity: 1;
+  visibility: visible;
+  animation: slideIn .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* Oculto */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px) scale(.8); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Pulso de atención */
+.pulse {
+  animation: attentionPulse .6s ease-in-out;
+}
+
+@keyframes attentionPulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.18); box-shadow: 0 0 0 8px rgba(37,211,102,.2); }
+  60%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Badge */
+.badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ef5350;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #07070f;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.2); }
+}

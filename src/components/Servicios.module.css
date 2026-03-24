@@ -1,0 +1,14 @@
+.card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: clamp(20px, 4vw, 30px);
+  position: relative;
+  overflow: hidden;
+  transition: background .4s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.icon { font-size: 30px; margin-bottom: 14px; margin-top: 8px; }
+.title { font-size: clamp(16px, 2.5vw, 19px); font-weight: 700; margin-bottom: 10px; }
+.desc  { font-size: 14px; line-height: 1.7; margin-bottom: 18px; flex: 1; }

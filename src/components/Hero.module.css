@@ -1,0 +1,120 @@
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 110px 0 70px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(40px, 6vw, 80px);
+  width: 100%;
+}
+
+.textCol {
+  flex: 1;
+  min-width: min(280px, 100%);
+}
+
+/* ── Typing ───────────────────────────────────────────────── */
+.typingRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 20px;
+  min-height: 36px; /* Evita que el layout salte al cambiar el texto */
+}
+
+.typingText {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 700;
+  color: #8F00FF;
+  letter-spacing: -0.5px;
+}
+
+/* Cursor parpadeante */
+.typingCursor {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 400;
+  color: #AE35FF;
+  animation: blink .75s step-end infinite;
+  line-height: 1;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Orbe ─────────────────────────────────────────────────── */
+.orbeWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.orbeGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #8F00FF22 0%, #AE35FF11 40%, transparent 70%);
+  filter: blur(30px);
+}
+
+.orbeRing {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.orbeCore {
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8F00FF, #AE35FF, #C46CFF);
+  box-shadow: 0 0 60px #8F00FF66, 0 0 120px #AE35FF33;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.orbeCoreText {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(8px, 1.5vw, 13px);
+  color: #fff;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.logoChip {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Stats ────────────────────────────────────────────────── */
+.statNumber {
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 800;
+}
+
+.statLabel {
+  font-size: 13px;
+  margin-top: 4px;
+}

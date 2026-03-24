@@ -1,0 +1,77 @@
+.btn {
+  /* Posición fija esquina inferior derecha */
+  position: fixed;
+  bottom: 32px;
+  right: 28px;
+  z-index: 150;
+
+  /* Tamaño y forma */
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  /* Gradiente violeta del portfolio */
+  background: linear-gradient(135deg, #8F00FF, #AE35FF);
+  box-shadow: 0 4px 20px #8F00FF55, 0 0 0 0 #8F00FF44;
+
+  /* Centrar icono */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Transición suave para hover y aparición */
+  transition: transform .3s cubic-bezier(.34, 1.56, .64, 1),
+              box-shadow .3s ease,
+              opacity .4s ease,
+              visibility .4s ease;
+}
+
+/* ── Hover ───────────────────────────────────────────────── */
+.btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 28px #8F00FF77, 0 0 0 6px #8F00FF22;
+}
+
+.btn:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+/* ── Visible — entra desde abajo ──────────────────────────── */
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  /* Animación de entrada */
+  animation: slideIn .4s cubic-bezier(.34, 1.56, .64, 1) both;
+}
+
+/* ── Oculto — sale hacia abajo ────────────────────────────── */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+
+/* ── Animación de entrada ─────────────────────────────────── */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Pulse suave en reposo ────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 20px #8F00FF55, 0 0 0 0 #8F00FF33; }
+  50%       { box-shadow: 0 4px 20px #8F00FF55, 0 0 0 8px #8F00FF00; }
+}
+.visible {
+  animation: slideIn .4s cubic-bezier(.34, 1.56, .64, 1) both,
+             pulse 2.5s ease-in-out 1s infinite;
+}

@@ -1,0 +1,90 @@
+.name {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  transition: color .3s;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ── Wrapper del item (necesario para posicionar el tooltip) ── */
+.itemWrap {
+  position: relative;
+}
+
+/* ── Tooltip ────────────────────────────────────────────────── */
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  z-index: 100;
+  pointer-events: none;
+  animation: tooltipIn .2s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+@keyframes tooltipIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px) scale(.95); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+/* Flecha hacia abajo */
+.tooltipArrow {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid;
+}
+
+/* Nivel con dot */
+.tooltipLevel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.levelDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Barra de nivel */
+.levelBar {
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.levelFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+
+/* Descripción */
+.tooltipDesc {
+  font-size: 11px;
+  font-family: 'Syne', sans-serif;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Evitar que el tooltip se corte en los bordes */
+@media (max-width: 480px) {
+  .tooltip {
+    width: 150px;
+    font-size: 10px;
+  }
+}

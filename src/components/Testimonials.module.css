@@ -1,0 +1,240 @@
+/* ── Main card ──────────────────────────────────────────────── */
+.card {
+  border-radius: 20px;
+  padding: clamp(24px, 5vw, 48px) clamp(20px, 5vw, 52px);
+  position: relative;
+  overflow: hidden;
+  transition: background .4s, border-color .4s;
+  margin-bottom: 28px;
+}
+
+/* Accent top bar */
+.cardTop {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 4px 4px 0 0;
+  transition: background .4s;
+}
+
+/* Quote icon */
+.quoteIcon {
+  opacity: 0.2;
+  position: absolute;
+  top: clamp(20px, 4vw, 32px);
+  right: clamp(20px, 4vw, 40px);
+  width: clamp(24px, 4vw, 36px);
+  height: clamp(24px, 4vw, 36px);
+  transition: opacity .3s;
+}
+
+/* Stars */
+.stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 20px;
+  margin-top: 4px;
+}
+
+/* Testimonial text */
+.text {
+  font-size: clamp(14px, 2.2vw, 18px);
+  line-height: 1.8;
+  margin: 0 0 32px;
+  font-style: italic;
+  max-width: 720px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 400;
+}
+
+/* Author row */
+.author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  flex-shrink: 0;
+  transition: box-shadow .4s;
+}
+
+.authorName {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 2px;
+}
+
+.authorRole {
+  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  line-height: 1.4;
+}
+
+/* ── Slide animations ───────────────────────────────────────── */
+.exitNext {
+  animation: slideOutNext .32s ease forwards;
+}
+.exitPrev {
+  animation: slideOutPrev .32s ease forwards;
+}
+
+@keyframes slideOutNext {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(-32px) scale(0.98); }
+}
+@keyframes slideOutPrev {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(32px) scale(0.98); }
+}
+
+/* ── Controls row ───────────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+/* Dots */
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.dotActive {
+  width: 28px;
+  border-radius: 4px;
+}
+
+/* Counter */
+.counter {
+  font-size: 13px;
+  font-family: 'Space Mono', monospace;
+  white-space: nowrap;
+}
+
+/* Nav buttons */
+.navBtns {
+  display: flex;
+  gap: 10px;
+}
+
+.navBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .25s, transform .25s, border-color .25s;
+  flex-shrink: 0;
+}
+
+.navBtn:hover {
+  background: rgba(143, 0, 255, 0.18) !important;
+  transform: scale(1.08);
+  border-color: #AE35FF !important;
+}
+
+.navBtn:active {
+  transform: scale(0.96);
+}
+
+/* ── Mini cards grid ────────────────────────────────────────── */
+.miniGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .miniGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .miniGrid { grid-template-columns: repeat(5, 1fr); }
+}
+
+.miniCardWrap {
+  cursor: pointer;
+}
+
+.miniCard {
+  border-radius: 14px;
+  padding: 14px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background .3s, border-color .3s;
+}
+
+.miniAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  flex-shrink: 0;
+}
+
+.miniInfo {
+  min-width: 0;
+}
+
+.miniName {
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .3s;
+  margin-bottom: 4px;
+}
+
+.miniStars {
+  display: flex;
+  gap: 2px;
+}
+
+/* ── Responsive: stack controls on very small screens ────────── */
+@media (max-width: 380px) {
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .navBtns {
+    align-self: flex-end;
+  }
+}

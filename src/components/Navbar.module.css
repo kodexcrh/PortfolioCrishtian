@@ -1,0 +1,158 @@
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  transition: all .3s ease;
+}
+
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  gap: 16px;
+  padding: 0 16px;
+  max-width: 1400px;   /* ← mismo max-width de tus secciones */
+  margin: 0 auto;      /* ← centra el contenido */
+  width: 100%;    
+  /* Padding extra en móvil para que el hamburger no quede pegado al borde */
+}
+
+@media (min-width: 640px) {
+  .navInner {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navInner {
+    padding: 0 48px;
+  }
+}
+
+/* ── Logo ─────────────────────────────────────────────────── */
+.logo {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.logoCloud {
+  background: linear-gradient(135deg, #8F00FF, #AE35FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logoCoders {
+  background: linear-gradient(135deg, #A8EB12, #4ffbdf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Nav link wrapper ─────────────────────────────────────── */
+/*
+  Cada link tiene su propio wrapper relativo
+  para que la barra quede exactamente debajo del texto.
+*/
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 4px;
+}
+.navLinkWrap{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.navLink {
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color .2s ease;
+  white-space: nowrap;
+  padding-bottom: 2px;
+}
+
+/* ── Barra indicadora activa ──────────────────────────────── */
+.activeBar {
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8F00FF, #AE35FF);
+  box-shadow: 0 0 8px #8F00FF88;
+  /* Animación de entrada/salida con scaleX */
+  transform-origin: center;
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1),
+              opacity   .35s ease;
+}
+
+/* ── Controls ─────────────────────────────────────────────── */
+.logoImg {
+  display: block;
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 32px;
+}
+@media (min-width: 640px) {
+  .logoImg { height: 38px; }
+}
+
+/* ── Botón CV ─────────────────────────────────────────────── */
+.cvBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1.5px solid #8F00FF44;
+  background: transparent;
+  color: #8F00FF;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+  flex-shrink: 0;
+}
+
+.cvBtn:hover {
+  background: linear-gradient(135deg, #8F00FF, #AE35FF);
+  border-color: transparent;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px #8F00FF44;
+}
+
+.cvLabel {
+  letter-spacing: 1px;
+}
+
+/* ── Estado descargado ────────────────────────────────────── */
+.cvBtnDone {
+  border-color: #A8EB1266 !important;
+  background: #A8EB1218 !important;
+  color: #A8EB12 !important;
+}
+
+.cvIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconSwap .25s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes iconSwap {
+  from { transform: scale(0) rotate(-90deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+}

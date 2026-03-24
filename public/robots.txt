@@ -1,0 +1,8 @@
+# robots.txt — CloudCoders
+# https://cloudcoders.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cloudcoders.dev/sitemap.xml

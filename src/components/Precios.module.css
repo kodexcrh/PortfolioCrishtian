@@ -1,0 +1,29 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+.card {
+  border-radius: 20px;
+  padding: clamp(22px, 4vw, 32px);
+  position: relative;
+  overflow: hidden;
+  transition: background .4s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.cardTop { position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 4px 4px 0 0; }
+.badge   { position: absolute; top: 18px; right: 18px; background: #8F00FF; color: #fff; font-size: 10px; font-weight: 700; font-family: 'Space Mono', monospace; padding: 3px 10px; border-radius: 999px; }
+.icon    { font-size: 32px; margin-top: 8px; margin-bottom: 12px; }
+.label   { font-size: 11px; font-family: 'Space Mono', monospace; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+.price   { font-size: clamp(36px, 5vw, 48px); font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.priceSup { font-size: 22px; font-weight: 600; vertical-align: top; margin-top: 10px; display: inline-block; }
+.priceUsd { font-size: 14px; font-weight: 400; }
+.desc    { font-size: 13px; line-height: 1.6; margin-bottom: 20px; margin-top: 8px; }
+.features { flex: 1; list-style: none; margin-top: 0; }
+.feature  { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
+.dots    { display: flex; gap: 6px; margin: 16px 0 8px; }
+.dot     { height: 3px; flex: 1; border-radius: 99px; cursor: pointer; transition: background .3s; }
+.note    { text-align: center; font-size: 13px; margin-top: 28px; font-family: 'Space Mono', monospace; }

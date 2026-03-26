@@ -1,6 +1,7 @@
 import botGastosImg from "../assets/bot-gastos.png";
 import DashboardVentasImg from "../assets/DashboardVentas.png";
-import PortfolioImg from "../assets/PORTFOLIO.png"
+import PortfolioImg from "../assets/PORTFOLIO.png";
+import SistemaRestaurante from "../assets/sistemarestaurante.png";
 
 export const PROJECT_DETAILS = {
   "Dashboard Analytics": [
@@ -80,13 +81,13 @@ export const PROJECT_DETAILS = {
     },
     {
       title: "Dashboard Admin SaaS",
-      detail: "Aplicación SPA con autenticación, gestión de usuarios, roles y permisos. Arquitectura modular con hooks personalizados, lazy loading y optimización de rendimiento.",
-      tech: ["React JS", "Tailwind CSS", "REST API", "JWT"],
+      detail: "Aplicación de Restaurante con autenticación, gestión de usuarios, roles y permisos. Arquitectura modular con hooks personalizados, lazy loading y optimización de rendimiento.",
+      tech: ["React JS", "Vite","React Router DOM", "Tailwind CSS", "REST API", "JWT", "Node.js", "PostgreSQL", "WebSockets", "Claude IA + N8N"],
       accent: "#38BDF8",
       link: null,
       status: "dev",
-      year: "2025",
-      image: null,
+      year: "2026",
+      image: SistemaRestaurante,
     },
     {
       title: "Landing Page con IA",

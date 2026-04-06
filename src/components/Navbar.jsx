@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "../constants";
 import { scrollToSection } from "../utils/scrollTo";
 import { SunIcon, MoonIcon } from "./Icons";
@@ -178,24 +179,40 @@ export default function Navbar({ dark, toggleTheme, T }) {
       </div>
 
       {/* ── Mobile menu ── */}
-      {menuOpen && (
-        <div className="mmenu" style={{ background: T.mMenuBg }} onClick={(e) => e.stopPropagation()}>
-          {NAV_LINKS.map((l) => (
-            <div
-              key={l}
-              className="mitem"
-              style={{
-                color:       active === l ? "#8F00FF" : T.text,
-                borderLeft:  active === l ? "3px solid #8F00FF" : "3px solid transparent",
-                paddingLeft: 12,
-              }}
-              onClick={() => { scrollToSection(l); setMenuOpen(false); }}
-            >
-              {l}
-            </div>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="mmenu"
+            style={{ background: T.mMenuBg }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {NAV_LINKS.map((l, i) => (
+              <motion.div
+                key={l}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="mitem"
+                style={{
+                  color: active === l ? "#8F00FF" : T.text,
+                  borderLeft: active === l ? "3px solid #8F00FF" : "3px solid transparent",
+                  paddingLeft: 12,
+                }}
+                onClick={() => {
+                  scrollToSection(l);
+                  setMenuOpen(false);
+                }}
+              >
+                {l}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

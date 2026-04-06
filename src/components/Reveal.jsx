@@ -1,16 +1,29 @@
-import { useInView } from "../hooks/useInView";
+import { motion } from "framer-motion";
 
-export default function Reveal({ children, delay = 0, distance = 36, direction = "up", style = {} }) {
-  const [ref, visible] = useInView(0.08, true);
-  const transforms = {
-    up:    `translateY(${distance}px)`,
-    down:  `translateY(-${distance}px)`,
-    left:  `translateX(${distance}px)`,
-    right: `translateX(-${distance}px)`,
+export default function Reveal({ children, delay = 0, distance = 30, direction = "up", style = {} }) {
+  const variants = {
+    hidden: { 
+      opacity: 0, 
+      x: direction === "left" ? distance : direction === "right" ? -distance : 0,
+      y: direction === "up" ? distance : direction === "down" ? -distance : 0
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      y: 0 
+    }
   };
+
   return (
-    <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? "translate(0,0)" : transforms[direction], transition: `opacity .65s ease ${delay}ms, transform .65s ease ${delay}ms`, willChange: visible ? "auto" : "transform, opacity", ...style }}>
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, delay: delay / 1000, ease: "easeOut" }}
+      variants={variants}
+      style={{ ...style }}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useCountUp } from "../hooks/useCountUp";
 import { useInView } from "../hooks/useInView";
 import { SOCIAL_LINKS, STACK_ITEMS } from "../constants";
@@ -165,44 +166,68 @@ export default function Hero({ dark, T }) {
   const [hovSocial, setHovSocial] = useState(null);
   const { displayed: typedText, color: typingColor } = useTyping();
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <section id="inicio" className={styles.section}>
-      <div className={`c ${styles.inner}`}>
+      <motion.div 
+        className={`c ${styles.inner}`}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={containerVariants}
+      >
 
         {/* Columna texto */}
-        <div className={`hero-anim ${styles.textCol}`}>
-          <span className="stag">👋 Disponible para proyectos</span>
+        <motion.div className={`hero-anim ${styles.textCol}`} variants={itemVariants}>
+          <motion.span className="stag" variants={itemVariants}>👋 Disponible para proyectos</motion.span>
 
-          <h1 className="htitle">
+          <motion.h1 className="htitle" variants={itemVariants}>
             Hola, soy <span className="glow-text">Crishtian</span>
-          </h1>
+          </motion.h1>
 
           {/* Typing — color cambia con cada rol */}
-          <div className={styles.typingRow}>
+          <motion.div className={styles.typingRow} variants={itemVariants}>
             <span className={styles.typingText} style={{ color: typingColor, transition: "color .3s ease" }}>
               {typedText}
             </span>
             <span className={styles.typingCursor} style={{ color: typingColor, transition: "color .3s ease" }}>|</span>
-          </div>
+          </motion.div>
 
-          <p className="hsub" style={{ color: T.textMid }}>
+          <motion.p className="hsub" style={{ color: T.textMid }} variants={itemVariants}>
             Construyo interfaces con <strong style={{ color: "#AE35FF" }}>React JS</strong>, analizo datos con{" "}
             <strong style={{ color: "#8F00FF" }}>Power BI</strong> e{" "}
             <strong style={{ color: "#C46CFF" }}>IA</strong>, y automatizo con{" "}
             <strong style={{ color: "#A8EB12" }}>n8n</strong>.
-          </p>
+          </motion.p>
 
-          <div className="hbtns">
+          <motion.div className="hbtns" variants={itemVariants}>
             <button className="btn-p" onClick={() => scrollToSection("Proyectos")}>Ver proyectos →</button>
             <button className="btn-o" onClick={() => scrollToSection("Contacto")}>Contactar</button>
-          </div>
+          </motion.div>
 
-          <div style={{ marginTop: 36 }}>
+          <motion.div style={{ marginTop: 36 }} variants={itemVariants}>
             <div className="social-row">
               {SOCIAL_LINKS.map((s) => (
                 <div key={s.name} className="social-wrap">
                   <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
                     <button className="social-btn"
+                      aria-label={s.name}
                       onMouseEnter={() => setHovSocial(s.name)} onMouseLeave={() => setHovSocial(null)}
                       style={{ background: hovSocial === s.name ? s.bg : dark ? "#0f0f1e" : "#f0eaff", border: hovSocial === s.name ? "1.5px solid transparent" : "1.5px solid #8F00FF22", boxShadow: hovSocial === s.name ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(143,0,255,.3)"}` : "none" }}>
                       {s.icon(hovSocial === s.name ? "#fff" : dark ? "#aaa" : "#6633aa")}
@@ -212,16 +237,24 @@ export default function Hero({ dark, T }) {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <AnimatedStats T={T} styles={styles} />
-        </div>
+          <motion.div variants={itemVariants}>
+            <AnimatedStats T={T} styles={styles} />
+          </motion.div>
+        </motion.div>
 
         {/* Columna orbe */}
-        <div className="hero-orbe-col">
+        <motion.div 
+          className="hero-orbe-col"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
           <OrbeHero dark={dark} />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

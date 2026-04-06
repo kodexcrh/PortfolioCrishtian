@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Estilos globales
 import GlobalStyles from "./components/GlobalStyles";
@@ -24,9 +25,17 @@ import Testimonials from "./components/Testimonials";
 import Contacto from "./components/Contacto";
 
 export default function Portfolio() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved ? saved === "dark" : true;
+  });
   const [themeAnim, setThemeAnim] = useState(false);
   const [splashDone, setSplashDone] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("theme", dark ? "dark" : "light");
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
 
   const T = {
     bg:        dark ? "#07070f"                                        : "#f7f4ff",

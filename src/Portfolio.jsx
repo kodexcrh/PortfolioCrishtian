@@ -23,6 +23,7 @@ import Stack from "./components/Stack";
 import Precios from "./components/Precios";
 import Testimonials from "./components/Testimonials";
 import Contacto from "./components/Contacto";
+import SectionDivider from "./components/SectionDivider";
 
 export default function Portfolio() {
   const [dark, setDark] = useState(() => {
@@ -84,16 +85,23 @@ export default function Portfolio() {
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <Hero         dark={dark} T={T} />
+        <SectionDivider dark={dark} />
         <SobreMi      dark={dark} T={T} />
+        <SectionDivider dark={dark} />
         <Servicios                T={T} />
+        <SectionDivider dark={dark} />
         <Proyectos    dark={dark} T={T} />
+        <SectionDivider dark={dark} />
         <Stack        dark={dark} T={T} />
+        <SectionDivider dark={dark} />
         <Precios      dark={dark} T={T} />
+        <SectionDivider dark={dark} />
         <Testimonials dark={dark} T={T} />
+        <SectionDivider dark={dark} />
         <Contacto     dark={dark} T={T} />
       </div>
 
-      <Footer T={T} />
+      <Footer T={T} dark={dark} />
     </div>
   );
 }

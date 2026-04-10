@@ -23,14 +23,65 @@
   max-width: 280px;
 }
 
+/* Borde animado rotativo */
 .photoRing {
   position: absolute;
   inset: -3px;
   border-radius: 27px;
-  background: linear-gradient(135deg, #8F00FF, #A8EB12, #4ffbdf, #AE35FF);
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    #8F00FF,
+    #A8EB12,
+    #4ffbdf,
+    #AE35FF,
+    #8F00FF
+  );
   z-index: 0;
-  opacity: 0.5;
-  filter: blur(1px);
+  animation: spinRing 4s linear infinite;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spinRing {
+  to { --angle: 360deg; }
+}
+
+/* Fallback para navegadores sin @property */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .photoRing {
+    background: linear-gradient(135deg, #8F00FF, #A8EB12, #4ffbdf, #AE35FF);
+    opacity: 0.6;
+  }
+}
+
+/* Capa interior que tapa el overflow del ring */
+.photoInner::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 23px;
+  background: #07070f;
+  z-index: 0;
+}
+
+/* Glow exterior */
+.photoInner::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 36px;
+  background: radial-gradient(ellipse, #8F00FF18 0%, transparent 70%);
+  z-index: -1;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
 }
 
 .photoPlaceholder {
@@ -104,9 +155,9 @@
 /* Foto real */
 .photoImg {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
-  border-radius: 24px;
+  border-radius: 22px;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center top;

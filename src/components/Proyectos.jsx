@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { PROJECTS } from "../constants";
+import { PROJECT_DETAILS } from "./projectData";
 import ProjectModal from "./ProjectModal";
 import Reveal from "./Reveal";
 import styles from "./Proyectos.module.css";
 
 export default function Proyectos({ dark, T }) {
   const [openCategory, setOpenCategory] = useState(null);
-  const [openAccent, setOpenAccent] = useState("#8F00FF");
+  const [openAccent,   setOpenAccent]   = useState("#8F00FF");
+  const [hoveredIdx,   setHoveredIdx]   = useState(null);
 
   const handleOpen = (title, accent) => {
     setOpenAccent(accent);
     setOpenCategory(title);
+  };
+
+  // Toma la primera imagen disponible de cada categoría
+  const getPreview = (title) => {
+    const items = PROJECT_DETAILS[title] ?? [];
+    return items.find((p) => p.image)?.image ?? null;
   };
 
   return (
@@ -20,31 +28,73 @@ export default function Proyectos({ dark, T }) {
           <Reveal><span className="stag">// Proyectos</span></Reveal>
           <Reveal delay={80}><h2 className="sh2">Trabajo <span className="glow-text">destacado</span></h2></Reveal>
           <Reveal delay={140}><p className="sdesc" style={{ color: T.textSub }}>Proyectos reales que demuestran mis capacidades técnicas y analíticas.</p></Reveal>
+
           <div className="g3">
-            {PROJECTS.map((p, i) => (
-              <Reveal key={i} delay={i * 110} style={{ height: "100%" }}>
-                <div className="card-hover-wrap">
-                  <div className={styles.card} style={{ background: T.bgCard, border: `1px solid ${p.accent}22` }}>
-                    <div className="card-top" style={{ background: `linear-gradient(90deg,${p.accent},${p.accent}88,transparent)` }} />
-                    <h3 className={styles.title} style={{ color: p.color }}>{p.title}</h3>
-                    <p className={styles.desc} style={{ color: T.textSub }}>{p.desc}</p>
-                    <div className={styles.tags}>{p.tech.map((t) => <span key={t} className="tag" style={{ background: `${p.accent}18`, color: p.accent, border: `1px solid ${p.accent}35` }}>{t}</span>)}</div>
-                    <span
-                      className={styles.cta}
-                      style={{ color: p.color }}
+            {PROJECTS.map((p, i) => {
+              const preview = getPreview(p.title);
+              const isHovered = hoveredIdx === i;
+              return (
+                <Reveal key={i} delay={i * 110} style={{ height: "100%" }}>
+                  <div className="card-hover-wrap"
+                    onMouseEnter={() => setHoveredIdx(i)}
+                    onMouseLeave={() => setHoveredIdx(null)}
+                  >
+                    <div
+                      className={styles.card}
+                      style={{ background: T.bgCard, border: `1px solid ${p.accent}${isHovered ? "55" : "22"}` }}
                       onClick={() => handleOpen(p.title, p.accent)}
                     >
-                      Ver proyecto →
-                    </span>
+                      <div className="card-top" style={{ background: `linear-gradient(90deg,${p.accent},${p.accent}88,transparent)` }} />
+
+                      {/* ── Thumbnail ── */}
+                      <div className={styles.imgWrap} style={{ borderColor: `${p.accent}25` }}>
+                        {preview ? (
+                          <>
+                            <img
+                              src={preview}
+                              alt={p.title}
+                              className={styles.img}
+                              style={{ transform: isHovered ? "scale(1.06)" : "scale(1)" }}
+                              loading="lazy"
+                            />
+                            {/* overlay con count */}
+                            <div className={styles.imgOverlay} style={{ opacity: isHovered ? 1 : 0 }}>
+                              <span className={styles.overlayText} style={{ background: p.accent }}>
+                                {PROJECT_DETAILS[p.title]?.length ?? 0} proyectos →
+                              </span>
+                            </div>
+                          </>
+                        ) : (
+                          <div className={styles.imgPlaceholder} style={{ background: `${p.accent}10`, borderColor: `${p.accent}30` }}>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="1.5" opacity="0.5">
+                              <rect x="3" y="3" width="18" height="18" rx="3"/>
+                              <circle cx="8.5" cy="8.5" r="1.5"/>
+                              <path d="M21 15l-5-5L5 21"/>
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* ── Contenido ── */}
+                      <h3 className={styles.title} style={{ color: p.color }}>{p.title}</h3>
+                      <p className={styles.desc} style={{ color: T.textSub }}>{p.desc}</p>
+                      <div className={styles.tags}>
+                        {p.tech.map((t) => (
+                          <span key={t} className="tag" style={{ background: `${p.accent}18`, color: p.accent, border: `1px solid ${p.accent}35` }}>{t}</span>
+                        ))}
+                      </div>
+                      <span className={styles.cta} style={{ color: p.color }}>
+                        Ver proyecto →
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Modal */}
       {openCategory && (
         <ProjectModal
           category={openCategory}

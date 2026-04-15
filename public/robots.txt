@@ -1,8 +1,8 @@
-# robots.txt — CloudCoders
-# https://cloudcoders.dev
+# robots.txt — Kodex
+# https://kodex.dev
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://cloudcoders.dev/sitemap.xml
+Sitemap: https://kodex.dev/sitemap.xml

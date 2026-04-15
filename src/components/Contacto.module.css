@@ -7,7 +7,7 @@
 }
 
 .card {
-  border: 1px solid #8F00FF18;
+  border: 1px solid #7C3AED18;
   border-radius: 12px;
   padding: 16px 18px;
   display: flex;
@@ -32,7 +32,7 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #8F00FF, #AE35FF, #A8EB12);
+  background: linear-gradient(90deg, #7C3AED, #9333EA, #A8EB12);
   border-radius: 4px 4px 0 0;
 }
 
@@ -93,8 +93,8 @@
 }
 
 .input:focus {
-  border-color: #8F00FF !important;
-  box-shadow: 0 0 0 3px #8F00FF18;
+  border-color: #7C3AED !important;
+  box-shadow: 0 0 0 3px #7C3AED18;
 }
 
 .input::placeholder { color: #44445e; }

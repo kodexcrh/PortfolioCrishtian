@@ -12,6 +12,9 @@ const LEVEL_COLOR = {
 export default function Stack({ dark, T }) {
   const [hovStack, setHovStack] = useState(null);
 
+  // Cicla entre los 3 colores de root para el hover
+  const HOVER_COLORS = ["#01D4E8", "#FF3E81", "#FEC303"];
+
   return (
     <section id="stack" className="sec">
       <div className="c">
@@ -20,9 +23,10 @@ export default function Stack({ dark, T }) {
         <Reveal delay={140}><p className="sdesc" style={{ color: T.textSub }}>Herramientas y tecnologías con las que trabajo a diario.</p></Reveal>
         <Reveal delay={180}>
           <div className="stack-grid">
-            {STACK_ITEMS.map((s) => {
+            {STACK_ITEMS.map((s, idx) => {
               const isHov = hovStack === s.name;
-              const levelColor = LEVEL_COLOR[s.level] || "#8F00FF";
+              const levelColor = LEVEL_COLOR[s.level] || "#7C3AED";
+              const hc = HOVER_COLORS[idx % 3];
               return (
                 <div
                   key={s.name}
@@ -30,14 +34,14 @@ export default function Stack({ dark, T }) {
                   onMouseEnter={() => setHovStack(s.name)}
                   onMouseLeave={() => setHovStack(null)}
                   style={{
-                    background: isHov ? (dark ? `${s.color}18` : `${s.color}12`) : (dark ? "#0f0f1e" : "#f8f4ff"),
-                    border: `1.5px solid ${isHov ? s.color + "55" : (dark ? "#ffffff08" : "#8F00FF12")}`,
-                    boxShadow: isHov ? `0 12px 32px ${s.color}25` : "none",
+                    background: isHov ? (dark ? `${hc}18` : `${hc}12`) : (dark ? "#0f0f1e" : "#f8f4ff"),
+                    border: `1.5px solid ${isHov ? hc + "66" : (dark ? "#ffffff08" : "#7C3AED12")}`,
+                    boxShadow: isHov ? `0 12px 32px ${hc}35` : "none",
                     position: "relative",
                   }}
                 >
                   {s.icon()}
-                  <span className={styles.name} style={{ color: isHov ? s.color : T.textSub }}>
+                  <span className={styles.name} style={{ color: isHov ? hc : T.textSub }}>
                     {s.name}
                   </span>
 
@@ -47,8 +51,8 @@ export default function Stack({ dark, T }) {
                       className={styles.tooltip}
                       style={{
                         background: dark ? "#0f0f1e" : "#ffffff",
-                        border: `1px solid ${s.color}44`,
-                        boxShadow: `0 8px 24px ${s.color}22`,
+                        border: `1px solid ${hc}44`,
+                        boxShadow: `0 8px 24px ${hc}22`,
                       }}
                     >
                       {/* Flecha del tooltip */}

@@ -28,7 +28,7 @@ export default function SectionDivider({ dark }) {
 
     function makeParticle(explode = false) {
       const W = canvas.width / DPR;
-      const colors = ["#8F00FF","#AE35FF","#C46CFF","#A8EB12","#4ffbdf","#ffffff"];
+      const colors = ["#7C3AED","#9333EA","#A855F7","#A8EB12","#4ffbdf","#ffffff"];
       const color = colors[Math.floor(Math.random() * colors.length)];
       const size = 1.4 + Math.random() * 2.8;
       const alpha = 0.2 + Math.random() * 0.65;
@@ -82,9 +82,9 @@ export default function SectionDivider({ dark }) {
       // Línea central con gradiente
       const grad = ctx.createLinearGradient(0, 0, W, 0);
       grad.addColorStop(0, "transparent");
-      grad.addColorStop(0.15, "#8F00FF33");
-      grad.addColorStop(0.5, explodedRef.current ? "#AE35FFaa" : "#8F00FF66");
-      grad.addColorStop(0.85, "#8F00FF33");
+      grad.addColorStop(0.15, "#7C3AED33");
+      grad.addColorStop(0.5, explodedRef.current ? "#9333EAaa" : "#7C3AED66");
+      grad.addColorStop(0.85, "#7C3AED33");
       grad.addColorStop(1, "transparent");
       ctx.save();
       ctx.strokeStyle = grad;
@@ -99,7 +99,7 @@ export default function SectionDivider({ dark }) {
       const cx = W/2, cy = H_PX/2;
       const ds = explodedRef.current ? 5 : 4;
       ctx.save();
-      ctx.fillStyle = explodedRef.current ? "#AE35FF" : "#8F00FF";
+      ctx.fillStyle = explodedRef.current ? "#9333EA" : "#7C3AED";
       ctx.translate(cx, cy);
       ctx.rotate(Math.PI/4);
       ctx.fillRect(-ds, -ds, ds*2, ds*2);

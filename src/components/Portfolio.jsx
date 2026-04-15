@@ -77,7 +77,7 @@ export default function Portfolio() {
 
       {/* Flash de transición de tema */}
       {themeAnim && (
-        <div className="flash" style={{ background: dark ? "#8F00FF" : "#fff" }} />
+        <div className="flash" style={{ background: dark ? "#7C3AED" : "#fff" }} />
       )}
 
       <BackgroundOrbs dark={dark} />

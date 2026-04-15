@@ -21,7 +21,7 @@
   transform: translateX(-50%);
   width: 600px;
   height: 300px;
-  background: radial-gradient(ellipse, #8F00FF18 0%, transparent 70%);
+  background: radial-gradient(ellipse, #7C3AED18 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -68,10 +68,10 @@
 }
 
 .logoImg {
-  width: 44px;
-  height: 44px;
+  width: 120px;
+  height: 70px;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px #8F00FF55);
+  filter: drop-shadow(0 0 8px #7C3AED55);
 }
 
 .logoText {
@@ -80,13 +80,6 @@
   line-height: 1.1;
 }
 
-.logoCloud,
-.logoCoders {
-  font-family: 'Monda', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
 
 .tagline {
   font-family: 'Space Mono', monospace;
@@ -125,7 +118,7 @@
 }
 
 .socialBtn:hover {
-  box-shadow: 0 4px 16px rgba(143,0,255,0.3);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.3);
 }
 
 /* ── Columnas de links ──────────────────────────────────────── */
@@ -152,7 +145,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #8F00FF;
+  background: #7C3AED;
   flex-shrink: 0;
 }
 
@@ -180,7 +173,7 @@
 }
 
 .footLink:hover {
-  color: #AE35FF !important;
+  color: #9333EA !important;
 }
 
 .footLink:hover .arrow {
@@ -189,7 +182,7 @@
 
 .arrow {
   font-size: 12px;
-  color: #8F00FF;
+  color: #7C3AED;
   transition: transform .2s ease;
   display: inline-block;
 }
@@ -219,7 +212,7 @@
 }
 
 a.contactItem:hover {
-  color: #AE35FF !important;
+  color: #9333EA !important;
 }
 
 .ctaBtn {
@@ -229,21 +222,21 @@ a.contactItem:hover {
   margin-top: 8px;
   padding: 9px 20px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #8F00FF, #AE35FF);
+  background: linear-gradient(135deg, #7C3AED, #9333EA);
   color: #fff;
   font-family: 'Syne', sans-serif;
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
   transition: opacity .2s, transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
-  box-shadow: 0 4px 20px #8F00FF44;
+  box-shadow: 0 4px 20px #7C3AED44;
   width: fit-content;
 }
 
 .ctaBtn:hover {
   opacity: 0.88;
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 28px #8F00FF66;
+  box-shadow: 0 8px 28px #7C3AED66;
 }
 
 /* ── Divider ────────────────────────────────────────────────── */

@@ -9,13 +9,19 @@
   padding: clamp(22px, 4vw, 32px);
   position: relative;
   overflow: hidden;
-  transition: background .4s;
+  transition: background .4s, transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--clr-gold) 20%, transparent),
+              0 0 0 1px color-mix(in srgb, var(--clr-gold) 12%, transparent);
+}
 .cardTop { position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 4px 4px 0 0; }
-.badge   { position: absolute; top: 18px; right: 18px; background: #8F00FF; color: #fff; font-size: 10px; font-weight: 700; font-family: 'Space Mono', monospace; padding: 3px 10px; border-radius: 999px; }
+.badge   { position: absolute; top: 18px; right: 18px; background: #7C3AED; color: #fff; font-size: 10px; font-weight: 700; font-family: 'Space Mono', monospace; padding: 3px 10px; border-radius: 999px; }
 .icon    { font-size: 32px; margin-top: 8px; margin-bottom: 12px; }
 .label   { font-size: 11px; font-family: 'Space Mono', monospace; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
 .price   { font-size: clamp(36px, 5vw, 48px); font-weight: 800; line-height: 1; margin-bottom: 4px; }

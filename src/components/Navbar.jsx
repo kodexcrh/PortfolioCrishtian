@@ -4,7 +4,7 @@ import { NAV_LINKS } from "../constants";
 import { scrollToSection } from "../utils/scrollTo";
 import { SunIcon, MoonIcon } from "./Icons";
 import styles from "./Navbar.module.css";
-import LogoNavbar from "../assets/LOGO-CLOUD-CODERS-transparente.png";
+import LogoNavbar from "../assets/KODEX.png";
 
 // ── Icono descarga / check ─────────────────────────────────────
 function DownloadIcon() {
@@ -93,7 +93,7 @@ export default function Navbar({ dark, toggleTheme, T }) {
       style={{
         background:     scrolled ? T.navBg      : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom:   scrolled ? "1px solid #8F00FF18" : "none",
+        borderBottom:   scrolled ? "1px solid #7C3AED18" : "none",
       }}
     >
       <div className={styles.navInner}>
@@ -105,14 +105,7 @@ export default function Navbar({ dark, toggleTheme, T }) {
         >
           <img src={LogoNavbar} alt="CloudCoders" style={{ height: "34px", width: "auto" }} />
 
-          <span style={{ fontFamily: "'Monda', sans-serif", fontWeight: 400, fontSize: "17px", letterSpacing: "0.3px", lineHeight: 1 }}>
-            <span style={{ color: "#8B5CF6", fontWeight: 700 }}>
-              Cloud
-            </span>
-            <span style={{ color: "#8B5CF6", fontWeight: 700 }}>
-              {" "}Coders
-            </span>
-          </span>
+          
         </div>
 
         {/* ── Desktop nav ── */}
@@ -123,10 +116,10 @@ export default function Navbar({ dark, toggleTheme, T }) {
               <div key={l} className={styles.navLinkWrap}>
                 <span
                   className={styles.navLink}
-                  style={{ color: isActive ? "#8F00FF" : T.textMid }}
+                  style={{ color: isActive ? "#7C3AED" : T.textMid }}
                   onClick={() => scrollToSection(l)}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#8F00FF")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? "#8F00FF" : T.textMid)}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#7C3AED")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? "#7C3AED" : T.textMid)}
                 >
                   {l}
                 </span>
@@ -171,9 +164,9 @@ export default function Navbar({ dark, toggleTheme, T }) {
             className={`hnav ${menuOpen ? "open" : ""}`}
             onClick={(e) => { e.stopPropagation(); setMenuOpen((v) => !v); }}
           >
-            <span style={{ background: menuOpen ? "#8F00FF" : T.text }} />
-            <span style={{ background: menuOpen ? "#AE35FF" : T.text }} />
-            <span style={{ background: menuOpen ? "#C46CFF" : T.text }} />
+            <span style={{ background: menuOpen ? "#7C3AED" : T.text }} />
+            <span style={{ background: menuOpen ? "#9333EA" : T.text }} />
+            <span style={{ background: menuOpen ? "#A855F7" : T.text }} />
           </div>
         </div>
       </div>
@@ -198,8 +191,8 @@ export default function Navbar({ dark, toggleTheme, T }) {
                 transition={{ delay: i * 0.05 }}
                 className="mitem"
                 style={{
-                  color: active === l ? "#8F00FF" : T.text,
-                  borderLeft: active === l ? "3px solid #8F00FF" : "3px solid transparent",
+                  color: active === l ? "#7C3AED" : T.text,
+                  borderLeft: active === l ? "3px solid #7C3AED" : "3px solid transparent",
                   paddingLeft: 12,
                 }}
                 onClick={() => {

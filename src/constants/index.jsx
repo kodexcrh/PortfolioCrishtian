@@ -42,21 +42,21 @@ export const PROJECTS = [
     desc: "Panel de métricas empresariales con Power BI integrado y análisis predictivo con IA.",
     tech: ["Power BI", "Claude AI", "React"],
     accent: "#A8EB12",
-    color: "#8F00FF",
+    color: "#7C3AED",
   },
   {
     title: "Automatización CRM",
     desc: "Pipeline automatizado de captación y seguimiento de clientes con n8n y múltiples integraciones.",
     tech: ["n8n", "API", "Webhooks"],
     accent: "#ffc75f",
-    color: "#AE35FF",
+    color: "#9333EA",
   },
   {
     title: "App Web Reactiva",
     desc: "Aplicación SPA de gestión interna con React, hooks personalizados y arquitectura escalable.",
     tech: ["React", "Context API", "CSS Modules"],
     accent: "#4ffbdf",
-    color: "#C46CFF",
+    color: "#A855F7",
   },
 ];
 
@@ -94,14 +94,14 @@ export const STACK_ITEMS = [
   },
   {
     name: "Claude AI",
-    color: "#C46CFF",
+    color: "#A855F7",
     level: "Intermedio",
     desc: "Agentes IA, automatización inteligente, prompting",
     icon: () => (
       <svg viewBox="0 0 40 40" width="36" height="36">
-        <circle cx="20" cy="20" r="18" fill="none" stroke="#C46CFF" strokeWidth="2" />
-        <path d="M12 26 Q20 10 28 26" fill="none" stroke="#C46CFF" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="20" cy="22" r="2.5" fill="#C46CFF" />
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#A855F7" strokeWidth="2" />
+        <path d="M12 26 Q20 10 28 26" fill="none" stroke="#A855F7" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx="20" cy="22" r="2.5" fill="#A855F7" />
         <circle cx="13" cy="17" r="1.5" fill="#A78BFA" opacity=".7" />
         <circle cx="27" cy="17" r="1.5" fill="#A78BFA" opacity=".7" />
       </svg>
@@ -245,7 +245,7 @@ export const AUTO_PLANS = [
     id: "advanced",
     label: "Avanzado",
     price: 700,
-    color: "#AE35FF",
+    color: "#9333EA",
     features: [
       "Flujos ilimitados",
       "IA con Claude",
@@ -390,12 +390,12 @@ export const CORNER_LOGOS = [
   {
     pos: "bottomRight",
     name: "Claude AI",
-    color: "#C46CFF",
+    color: "#A855F7",
     icon: (s) => (
       <svg viewBox="0 0 40 40" width={s} height={s}>
-        <circle cx="20" cy="20" r="18" fill="none" stroke="#C46CFF" strokeWidth="2" />
-        <path d="M12 26 Q20 10 28 26" fill="none" stroke="#C46CFF" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="20" cy="22" r="2.5" fill="#C46CFF" />
+        <circle cx="20" cy="20" r="18" fill="none" stroke="#A855F7" strokeWidth="2" />
+        <path d="M12 26 Q20 10 28 26" fill="none" stroke="#A855F7" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx="20" cy="22" r="2.5" fill="#A855F7" />
         <circle cx="13" cy="17" r="1.5" fill="#A78BFA" opacity=".8" />
         <circle cx="27" cy="17" r="1.5" fill="#A78BFA" opacity=".8" />
       </svg>

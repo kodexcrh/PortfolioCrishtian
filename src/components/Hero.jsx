@@ -34,7 +34,7 @@ const GitHubIcon = ({ color = "#fff" }) => (
 const RING1_LOGOS = [
   { name: "React JS",    color: "#61DAFB", angle: 0   },
   { name: "Power BI",    color: "#F2C811", angle: 120 },
-  { name: "Claude AI",   color: "#C46CFF", angle: 240 },
+  { name: "Claude AI",   color: "#A855F7", angle: 240 },
 ];
 const RING2_LOGOS = [
   { name: "n8n",          color: "#EA4B71", angle: 60  },
@@ -63,7 +63,7 @@ function LogoChip({ logo, className, dark }) {
   const { x, y } = chipPos(logo.angle);
   return (
     <div className={`${className} ${styles.logoChip}`} title={logo.name}
-      style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-50%)", background: dark ? `${logo.color}18` : `${logo.color}15`, border: `1.5px solid ${logo.color}55`, boxShadow: `0 4px 16px ${logo.color}33` }}>
+      style={{ left: `${x}%`, top: `${y}%`, "--chip-color": logo.color, background: dark ? `${logo.color}18` : `${logo.color}15`, border: `1.5px solid ${logo.color}55`, boxShadow: `0 4px 16px ${logo.color}33` }}>
       <ChipIcon name={logo.name} dark={dark} />
     </div>
   );
@@ -73,18 +73,18 @@ function OrbeHero({ dark }) {
   return (
     <div className={styles.orbeWrapper}>
       <div className={styles.orbeGlow} />
-      <div className={`orbe-ring-3 ${styles.orbeRing}`} style={{ width: "100%", height: "100%", border: `1px dashed ${dark ? "#8F00FF22" : "#8F00FF44"}` }} />
-      <div className={`orbe-ring-3 ${styles.orbeRing}`} style={{ width: "94%", height: "94%", border: `1px solid ${dark ? "#8F00FF2a" : "#8F00FF50"}`, animation: "orbeRotate 22s linear infinite" }}>
+      <div className={`orbe-ring-3 ${styles.orbeRing}`} style={{ width: "100%", height: "100%", border: `1px dashed ${dark ? "#01D4E822" : "#01D4E844"}` }} />
+      <div className={`orbe-ring-3 ${styles.orbeRing}`} style={{ width: "94%", height: "94%", border: `1px solid ${dark ? "#01D4E82a" : "#01D4E850"}`, animation: "orbeRotate 22s linear infinite" }}>
         {RING3_LOGOS.map((logo) => <LogoChip key={logo.name} logo={logo} className="logo-chip" dark={dark} />)}
       </div>
-      <div className={`orbe-ring-2 ${styles.orbeRing}`} style={{ width: "74%", height: "74%", border: `1px solid ${dark ? "#AE35FF28" : "#AE35FF55"}` }}>
+      <div className={`orbe-ring-2 ${styles.orbeRing}`} style={{ width: "74%", height: "74%", border: `1px solid ${dark ? "#01D4E828" : "#01D4E855"}` }}>
         {RING2_LOGOS.map((logo) => <LogoChip key={logo.name} logo={logo} className="logo-chip-2" dark={dark} />)}
       </div>
-      <div className={`orbe-ring-1 ${styles.orbeRing}`} style={{ width: "62%", height: "62%", border: `1.5px solid ${dark ? "#8F00FF44" : "#8F00FF66"}` }}>
+      <div className={`orbe-ring-1 ${styles.orbeRing}`} style={{ width: "62%", height: "62%", border: `1.5px solid ${dark ? "#01D4E844" : "#01D4E866"}` }}>
         {RING1_LOGOS.map((logo) => <LogoChip key={logo.name} logo={logo} className="logo-chip" dark={dark} />)}
       </div>
       <div className={`orbe-core ${styles.orbeCore}`}>
-        <span className={styles.orbeCoreText}>Cloud<br />Coders</span>
+        <img src="/src/assets/KODEX.png" alt="KODEX" className={styles.orbeCoreLogo} />
       </div>
     </div>
   );
@@ -92,10 +92,10 @@ function OrbeHero({ dark }) {
 
 // ── Hook useTyping ─────────────────────────────────────────────
 const ROLES = [
-  { text: "Developer & Data Analyst", color: "#0ACF83" },
-  { text: "React JS Developer",       color: "#1ABCFE" },
-  { text: "Power BI Analyst",         color: "#F24E1E" },
-  { text: "n8n Automation Expert",    color: "#A8EB12" },
+  { text: "Developer & Data Analyst", color: "#7C3AED" },
+  { text: "React JS Developer",       color: "#FF3E81" },
+  { text: "Power BI Analyst",         color: "#01D4E8" },
+  { text: "n8n Automation Expert",    color: "#FEC303" },
 ];
 
 function useTyping({
@@ -210,10 +210,10 @@ export default function Hero({ dark, T }) {
           </motion.div>
 
           <motion.p className="hsub" style={{ color: T.textMid }} variants={itemVariants}>
-            Construyo interfaces con <strong style={{ color: "#AE35FF" }}>React JS</strong>, analizo datos con{" "}
-            <strong style={{ color: "#8F00FF" }}>Power BI</strong> e{" "}
-            <strong style={{ color: "#C46CFF" }}>IA</strong>, y automatizo con{" "}
-            <strong style={{ color: "#A8EB12" }}>n8n</strong>.
+            Construyo interfaces con <strong style={{ color: "#7C3AED" }}>React JS</strong>, analizo datos con{" "}
+            <strong style={{ color: "#01D4E8" }}>Power BI</strong> e{" "}
+            <strong style={{ color: "#FF3E81" }}>IA</strong>, y automatizo con{" "}
+            <strong style={{ color: "#FEC303" }}>n8n</strong>.
           </motion.p>
 
           <motion.div className="hbtns" variants={itemVariants}>
@@ -229,7 +229,7 @@ export default function Hero({ dark, T }) {
                     <button className="social-btn"
                       aria-label={s.name}
                       onMouseEnter={() => setHovSocial(s.name)} onMouseLeave={() => setHovSocial(null)}
-                      style={{ background: hovSocial === s.name ? s.bg : dark ? "#0f0f1e" : "#f0eaff", border: hovSocial === s.name ? "1.5px solid transparent" : "1.5px solid #8F00FF22", boxShadow: hovSocial === s.name ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(143,0,255,.3)"}` : "none" }}>
+                      style={{ background: hovSocial === s.name ? s.bg : dark ? "#0f0f1e" : "#f0eaff", border: hovSocial === s.name ? "1.5px solid transparent" : "1.5px solid #7C3AED22", boxShadow: hovSocial === s.name ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}` : "none" }}>
                       {s.icon(hovSocial === s.name ? "#fff" : dark ? "#aaa" : "#6633aa")}
                     </button>
                   </a>

@@ -41,7 +41,7 @@
 }
 
 .logoCloud {
-  background: linear-gradient(135deg, #8F00FF, #AE35FF);
+  background: linear-gradient(135deg, #7C3AED, #9333EA);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -88,8 +88,8 @@
   height: 2px;
   width: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #8F00FF, #AE35FF);
-  box-shadow: 0 0 8px #8F00FF88;
+  background: linear-gradient(90deg, #7C3AED, #9333EA);
+  box-shadow: 0 0 8px #7C3AED88;
   /* Animación de entrada/salida con scaleX */
   transform-origin: center;
   transition: transform .35s cubic-bezier(.4, 0, .2, 1),
@@ -114,9 +114,9 @@
   gap: 5px;
   padding: 7px 10px;
   border-radius: 8px;
-  border: 1.5px solid #8F00FF44;
+  border: 1.5px solid #7C3AED44;
   background: transparent;
-  color: #8F00FF;
+  color: #7C3AED;
   font-size: 12px;
   font-weight: 700;
   font-family: 'Space Mono', monospace;
@@ -127,11 +127,11 @@
 }
 
 .cvBtn:hover {
-  background: linear-gradient(135deg, #8F00FF, #AE35FF);
+  background: linear-gradient(135deg, #7C3AED, #9333EA);
   border-color: transparent;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px #8F00FF44;
+  box-shadow: 0 4px 16px #7C3AED44;
 }
 
 .cvLabel {

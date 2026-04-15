@@ -8,7 +8,7 @@ const testimonials = [
     name: "María González",
     role: "CEO · StartupMX",
     avatar: "MG",
-    color: "#8F00FF",
+    color: "#7C3AED",
     rating: 5,
     text: "Crishtian transformó nuestra idea en una plataforma funcional en tiempo récord. Su dominio de React y la automatización con n8n nos ahorró semanas de trabajo manual.",
   },
@@ -44,7 +44,7 @@ const testimonials = [
     name: "Valeria Castro",
     role: "Product Manager · SaaS CO",
     avatar: "VC",
-    color: "#AE35FF",
+    color: "#9333EA",
     rating: 5,
     text: "Increíble capacidad para entender el negocio y traducirlo en soluciones técnicas. El portfolio que nos construyó nos consiguió 3 clientes nuevos el primer mes.",
   },
@@ -179,7 +179,7 @@ export default function Testimonials({ dark, T }) {
                 <button
                   key={i}
                   className={`${styles.dot} ${i === active ? styles.dotActive : ""}`}
-                  style={i === active ? { background: t.color } : { background: dark ? "#ffffff18" : "#8F00FF22" }}
+                  style={i === active ? { background: t.color } : { background: dark ? "#ffffff18" : "#7C3AED22" }}
                   onClick={() => goTo(i > active ? "next" : "prev", i)}
                   aria-label={`Testimonio ${i + 1}`}
                 />
@@ -199,21 +199,21 @@ export default function Testimonials({ dark, T }) {
             <div className={styles.navBtns}>
               <button
                 className={styles.navBtn}
-                style={{ border: `1px solid ${dark ? "#8F00FF33" : "#8F00FF22"}`, background: dark ? "rgba(143,0,255,0.06)" : "rgba(143,0,255,0.04)" }}
+                style={{ border: `1px solid ${dark ? "#7C3AED33" : "#7C3AED22"}`, background: dark ? "rgba(124,58,237,0.06)" : "rgba(124,58,237,0.04)" }}
                 onClick={() => goTo("prev")}
                 aria-label="Anterior"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2.5" strokeLinecap="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
               </button>
               <button
                 className={styles.navBtn}
-                style={{ border: `1px solid ${dark ? "#8F00FF33" : "#8F00FF22"}`, background: dark ? "rgba(143,0,255,0.06)" : "rgba(143,0,255,0.04)" }}
+                style={{ border: `1px solid ${dark ? "#7C3AED33" : "#7C3AED22"}`, background: dark ? "rgba(124,58,237,0.06)" : "rgba(124,58,237,0.04)" }}
                 onClick={() => goTo("next")}
                 aria-label="Siguiente"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2.5" strokeLinecap="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </button>
@@ -236,7 +236,7 @@ export default function Testimonials({ dark, T }) {
                     background: i === active
                       ? (dark ? `${item.color}12` : `${item.color}0e`)
                       : T.bgCard2,
-                    border: `1px solid ${i === active ? item.color + "44" : (dark ? "#ffffff08" : "#8F00FF12")}`,
+                    border: `1px solid ${i === active ? item.color + "44" : (dark ? "#ffffff08" : "#7C3AED12")}`,
                   }}
                 >
                   <div

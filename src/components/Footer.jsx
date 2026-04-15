@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Footer.module.css";
 import { scrollToSection } from "../utils/scrollTo";
 import { SOCIAL_LINKS } from "../constants";
-import LogoImg from "../assets/LOGO-CLOUD-CODERS-transparente.png";
+import LogoImg from "../assets/KODEX.png";
 
 const NAV_GROUPS = [
   {
@@ -37,10 +37,10 @@ export default function Footer({ T, dark }) {
   const [hoveredSocial, setHoveredSocial] = useState(null);
 
   const bg       = dark ? "#07071a" : "#f0eeff";
-  const border   = dark ? "rgba(143,0,255,0.15)" : "rgba(143,0,255,0.2)";
+  const border   = dark ? "rgba(124,58,237,0.15)" : "rgba(124,58,237,0.2)";
   const textMain = dark ? "#e8e8f0" : "#0a0a1a";
   const textSub  = dark ? "#8888a8" : "#555570";
-  const gridLine = dark ? "rgba(143,0,255,0.07)" : "rgba(143,0,255,0.08)";
+  const gridLine = dark ? "rgba(124,58,237,0.07)" : "rgba(124,58,237,0.08)";
 
   return (
     <footer className={styles.footer} style={{ background: bg, borderTop: `1px solid ${border}` }}>
@@ -56,10 +56,6 @@ export default function Footer({ T, dark }) {
           <div className={styles.brand}>
             <div className={styles.logoRow}>
               <img src={LogoImg} alt="CloudCoders" className={styles.logoImg} />
-              <div className={styles.logoText}>
-                <span className={styles.logoCloud} style={{ color: "#8F00FF" }}>Cloud</span>
-                <span className={styles.logoCoders} style={{ color: "#AE35FF" }}>Coders</span>
-              </div>
             </div>
             <p className={styles.tagline} style={{ color: textSub }}>
               Desarrollo web · Datos · Automatización
@@ -95,7 +91,7 @@ export default function Footer({ T, dark }) {
 
           {/* Servicios */}
           <div className={styles.col}>
-            <h4 className={styles.colTitle} style={{ color: "#8F00FF" }}>
+            <h4 className={styles.colTitle} style={{ color: "#7C3AED" }}>
               <span className={styles.colDot} />Servicios
             </h4>
             <ul className={styles.linkList}>
@@ -112,7 +108,7 @@ export default function Footer({ T, dark }) {
           {/* Nav grupos */}
           {NAV_GROUPS.map((group) => (
             <div key={group.label} className={styles.col}>
-              <h4 className={styles.colTitle} style={{ color: "#8F00FF" }}>
+              <h4 className={styles.colTitle} style={{ color: "#7C3AED" }}>
                 <span className={styles.colDot} />{group.label}
               </h4>
               <ul className={styles.linkList}>
@@ -129,7 +125,7 @@ export default function Footer({ T, dark }) {
 
           {/* Contacto */}
           <div className={styles.col}>
-            <h4 className={styles.colTitle} style={{ color: "#8F00FF" }}>
+            <h4 className={styles.colTitle} style={{ color: "#7C3AED" }}>
               <span className={styles.colDot} />Contacto
             </h4>
             <ul className={styles.contactList}>
@@ -141,13 +137,13 @@ export default function Footer({ T, dark }) {
               </li>
               <li>
                 <a href="mailto:cloudcoders.c2@gmail.com" className={styles.contactItem} style={{ color: textSub }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8F00FF" strokeWidth="2" strokeLinecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                   cloudcoders.c2@gmail.com
                 </a>
               </li>
               <li>
                 <span className={styles.contactItem} style={{ color: textSub }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   Huaraz, Perú 🇵🇪
                 </span>
               </li>
@@ -169,7 +165,7 @@ export default function Footer({ T, dark }) {
         {/* ── BOTTOM ───────────────────────────────────────── */}
         <div className={styles.bottom}>
           <div className={styles.copyright} style={{ color: textSub }}>
-            © {year} <span style={{ color: "#AE35FF", fontWeight: 700 }}>CloudCoders</span> · Todos los derechos reservados
+            © {year} <span style={{ color: "#9333EA", fontWeight: 700 }}>K<span className="ode" style={{color: "#FF3E81"}}>ODE</span>X</span> · Todos los derechos reservados
           </div>
           <div className={styles.statusRow}>
             <span className={styles.statusDot} />

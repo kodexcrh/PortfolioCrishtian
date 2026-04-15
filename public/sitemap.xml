@@ -3,7 +3,7 @@
 
   <!-- Página principal -->
   <url>
-    <loc>https://cloudcoders.dev/</loc>
+    <loc>https://kodex.dev/</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -11,35 +11,35 @@
 
   <!-- Secciones (anclas) — ayudan a Google a entender la estructura -->
   <url>
-    <loc>https://cloudcoders.dev/#sobre-mi</loc>
+    <loc>https://kodex.dev/#sobre-mi</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://cloudcoders.dev/#servicios</loc>
+    <loc>https://kodex.dev/#servicios</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://cloudcoders.dev/#proyectos</loc>
+    <loc>https://kodex.dev/#proyectos</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://cloudcoders.dev/#precios</loc>
+    <loc>https://kodex.dev/#precios</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://cloudcoders.dev/#contacto</loc>
+    <loc>https://kodex.dev/#contacto</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

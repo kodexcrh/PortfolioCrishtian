@@ -159,7 +159,7 @@
 .navBtn:hover {
   background: rgba(143, 0, 255, 0.18) !important;
   transform: scale(1.08);
-  border-color: #AE35FF !important;
+  border-color: #9333EA !important;
 }
 
 .navBtn:active {

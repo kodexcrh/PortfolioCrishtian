@@ -52,9 +52,9 @@ export default function SobreMi({ dark, T }) {
             <Reveal delay={180}>
               <p className={styles.desc} style={{ color: T.textMid }}>
                 Soy un desarrollador frontend especializado en{" "}
-                <strong style={{ color: "#AE35FF" }}>React JS</strong>, con experiencia en análisis
+                <strong style={{ color: "#9333EA" }}>React JS</strong>, con experiencia en análisis
                 de datos con <strong style={{ color: "#F2C811" }}>Power BI</strong> y soluciones de
-                IA mediante <strong style={{ color: "#C46CFF" }}>Claude AI</strong>.
+                IA mediante <strong style={{ color: "#A855F7" }}>Claude AI</strong>.
               </p>
             </Reveal>
             <Reveal delay={220}>
@@ -67,9 +67,9 @@ export default function SobreMi({ dark, T }) {
             <Reveal delay={260}>
               <div className={styles.tags}>
                 {[
-                  ["React JS",     "#AE35FF"],
+                  ["React JS",     "#9333EA"],
                   ["Power BI",     "#F2C811"],
-                  ["Claude AI",    "#C46CFF"],
+                  ["Claude AI",    "#A855F7"],
                   ["n8n",          "#EA4B71"],
                   ["JavaScript",   "#F7DF1E"],
                   ["Tailwind CSS", "#38BDF8"],

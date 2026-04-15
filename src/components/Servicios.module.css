@@ -28,7 +28,8 @@
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(143, 0, 255, 0.15);
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--clr-pink) 20%, transparent),
+              0 0 0 1px color-mix(in srgb, var(--clr-pink) 12%, transparent);
 }
 
 .icon {

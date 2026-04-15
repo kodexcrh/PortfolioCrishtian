@@ -12,7 +12,7 @@ const EDUCATION = [
     status: "Bachiller",
     statusColor: "#ffc75f",
     icon: "🎓",
-    accent: "#8F00FF",
+    accent: "#7C3AED",
     desc: "Formación integral en desarrollo de software, bases de datos, redes, sistemas de información y gestión tecnológica. Bachiller en Ingeniería de Sistemas.",
     tags: ["Sistemas", "Informática", "Software", "Bases de Datos", "Redes"],
   },
@@ -60,7 +60,7 @@ const CERTIFICATIONS = [
     instructor: "Ingrid Estupiñán",
     date: "Feb 2026",
     hours: "8 horas",
-    accent: "#C46CFF",
+    accent: "#A855F7",
     icon: "🤖",
     type: "Certificado de Participación",
     link: "https://drive.google.com/file/d/1kcePmb59TOy86o0_q_1-bNoULI44laLR/view?usp=sharing",
@@ -105,7 +105,7 @@ export default function EstudiosModal({ onClose, dark, T }) {
         {/* Header */}
         <div className={styles.modalHeader}>
           <div>
-            <span className={styles.modalTag} style={{ color: "#8F00FF" }}>// Formación</span>
+            <span className={styles.modalTag} style={{ color: "#7C3AED" }}>// Formación</span>
             <h2 className={styles.modalTitle} style={{ color: dark ? "#e8e8f0" : "#0a0a0a" }}>
               Educación & <span className="glow-text">Certificaciones</span>
             </h2>
@@ -117,9 +117,9 @@ export default function EstudiosModal({ onClose, dark, T }) {
             className={styles.closeBtn}
             onClick={onClose}
             aria-label="Cerrar"
-            style={{ background: dark ? "#1a0a2e" : "#ede5ff", border: "1.5px solid #8F00FF33" }}
+            style={{ background: dark ? "#1a0a2e" : "#ede5ff", border: "1.5px solid #7C3AED33" }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2.5" strokeLinecap="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2.5" strokeLinecap="round">
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>
@@ -137,9 +137,9 @@ export default function EstudiosModal({ onClose, dark, T }) {
                 className={styles.tab}
                 onClick={() => setActiveTab(tab.id)}
                 style={{
-                  background: activeTab === tab.id ? "linear-gradient(135deg,#8F00FF,#AE35FF)" : "transparent",
+                  background: activeTab === tab.id ? "linear-gradient(135deg,#7C3AED,#9333EA)" : "transparent",
                   color: activeTab === tab.id ? "#fff" : T.textSub,
-                  boxShadow: activeTab === tab.id ? "0 4px 16px #8F00FF44" : "none",
+                  boxShadow: activeTab === tab.id ? "0 4px 16px #7C3AED44" : "none",
                 }}
               >
                 {tab.label}

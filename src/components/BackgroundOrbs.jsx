@@ -9,10 +9,10 @@ export default function BackgroundOrbs({ dark }) {
 
   return (
     <div aria-hidden="true" className={styles.container}>
-      <div className={`${styles.orb} ${styles.orb1}`} style={{ background: `radial-gradient(circle,${dark ? "#8F00FF28" : "#8F00FF18"} 0%,transparent 68%)`, transform: `translateY(${offsetSlow}px)` }} />
-      <div className={`${styles.orb} ${styles.orb2}`} style={{ background: `radial-gradient(circle,${dark ? "#AE35FF2c" : "#AE35FF1a"} 0%,transparent 65%)`, transform: `translateY(-${offsetMid}px)` }} />
+      <div className={`${styles.orb} ${styles.orb1}`} style={{ background: `radial-gradient(circle,${dark ? "#7C3AED28" : "#7C3AED18"} 0%,transparent 68%)`, transform: `translateY(${offsetSlow}px)` }} />
+      <div className={`${styles.orb} ${styles.orb2}`} style={{ background: `radial-gradient(circle,${dark ? "#9333EA2c" : "#9333EA1a"} 0%,transparent 65%)`, transform: `translateY(-${offsetMid}px)` }} />
       <div className={`${styles.orb} ${styles.orb3}`} style={{ background: `radial-gradient(circle,${dark ? "#A8EB1218" : "#A8EB1212"} 0%,transparent 65%)`, transform: `translate(-50%, calc(-50% + ${offsetFast * 0.5}px))` }} />
-      <div className={`${styles.orb} ${styles.orb4}`} style={{ background: `radial-gradient(circle,${dark ? "#C46CFF16" : "#C46CFF0e"} 0%,transparent 70%)`, transform: `translateY(${offsetOrb4}px)` }} />
+      <div className={`${styles.orb} ${styles.orb4}`} style={{ background: `radial-gradient(circle,${dark ? "#A855F716" : "#A855F70e"} 0%,transparent 70%)`, transform: `translateY(${offsetOrb4}px)` }} />
     </div>
   );
 }

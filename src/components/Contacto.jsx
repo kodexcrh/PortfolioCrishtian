@@ -131,8 +131,8 @@ export default function Contacto({ dark, T }) {
                       onMouseLeave={() => setHovSocial(null)}
                       style={{
                         background: hovSocial === s.name + "c" ? s.bg : (dark ? "#0f0f1e" : "#f0eaff"),
-                        border: hovSocial === s.name + "c" ? "1.5px solid transparent" : "1.5px solid #8F00FF22",
-                        boxShadow: hovSocial === s.name + "c" ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(143,0,255,.3)"}` : "none"
+                        border: hovSocial === s.name + "c" ? "1.5px solid transparent" : "1.5px solid #7C3AED22",
+                        boxShadow: hovSocial === s.name + "c" ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}` : "none"
                       }}>
                       {s.icon(hovSocial === s.name + "c" ? "#fff" : dark ? "#aaa" : "#6633aa")}
                     </button>
@@ -163,7 +163,7 @@ export default function Contacto({ dark, T }) {
 
         {/* ── Formulario ── */}
         <Reveal delay={200}>
-          <div className={styles.formWrap} style={{ background: dark ? "linear-gradient(135deg,#0f0f1e,#12121f)" : "linear-gradient(135deg,#ffffff,#faf5ff)", border: "1px solid #8F00FF22" }}>
+          <div className={styles.formWrap} style={{ background: dark ? "linear-gradient(135deg,#0f0f1e,#12121f)" : "linear-gradient(135deg,#ffffff,#faf5ff)", border: "1px solid #7C3AED22" }}>
             <div className={styles.formTop} />
 
             <h3 className={styles.formTitle} style={{ color: T.text }}>
@@ -185,7 +185,7 @@ export default function Contacto({ dark, T }) {
                     onChange={handleChange}
                     placeholder="Tu nombre completo"
                     className={`${styles.input} ${errors.nombre ? styles.inputError : ""}`}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.nombre ? "#ef5350" : dark ? "#8F00FF22" : "#8F00FF18" }}
+                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.nombre ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
                   />
                   {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
                 </div>
@@ -198,7 +198,7 @@ export default function Contacto({ dark, T }) {
                     onChange={handleChange}
                     placeholder="tu@email.com"
                     className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.email ? "#ef5350" : dark ? "#8F00FF22" : "#8F00FF18" }}
+                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.email ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
                   />
                   {errors.email && <span className={styles.error}>{errors.email}</span>}
                 </div>
@@ -214,7 +214,7 @@ export default function Contacto({ dark, T }) {
                     onChange={handleChange}
                     placeholder="+51 999 999 999"
                     className={styles.input}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: dark ? "#8F00FF22" : "#8F00FF18" }}
+                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: dark ? "#7C3AED22" : "#7C3AED18" }}
                   />
                 </div>
                 <div className={styles.field}>
@@ -224,7 +224,7 @@ export default function Contacto({ dark, T }) {
                     value={form.servicio}
                     onChange={handleChange}
                     className={`${styles.input} ${styles.select} ${errors.servicio ? styles.inputError : ""}`}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: form.servicio ? T.text : T.textFaint, borderColor: errors.servicio ? "#ef5350" : dark ? "#8F00FF22" : "#8F00FF18" }}
+                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: form.servicio ? T.text : T.textFaint, borderColor: errors.servicio ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
                   >
                     <option value="" disabled>Selecciona un servicio</option>
                     {SERVICIOS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -243,7 +243,7 @@ export default function Contacto({ dark, T }) {
                   placeholder="Cuéntame sobre tu proyecto, qué necesitas y en qué plazo..."
                   rows={5}
                   className={`${styles.input} ${styles.textarea} ${errors.mensaje ? styles.inputError : ""}`}
-                  style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.mensaje ? "#ef5350" : dark ? "#8F00FF22" : "#8F00FF18" }}
+                  style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.mensaje ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
                 />
                 <div className={styles.charCount} style={{ color: T.textFaint }}>
                   {form.mensaje.length} caracteres

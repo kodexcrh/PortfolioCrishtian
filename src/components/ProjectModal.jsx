@@ -106,16 +106,16 @@ function PreciosModal({ dark, onClose, accent }) {
         {/* Cerrar */}
         <button
           onClick={onClose}
-          style={{ position:"absolute",top:20,right:20,width:44,height:44,borderRadius:"50%",background:closeBg,border:"1.5px solid #8F00FF33",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",transition:"transform .25s" }}
-          onMouseEnter={e=>{e.currentTarget.style.background="rgba(143,0,255,0.18)";e.currentTarget.style.transform="scale(1.1) rotate(90deg)";}}
+          style={{ position:"absolute",top:20,right:20,width:44,height:44,borderRadius:"50%",background:closeBg,border:"1.5px solid #7C3AED33",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",transition:"transform .25s" }}
+          onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,58,237,0.18)";e.currentTarget.style.transform="scale(1.1) rotate(90deg)";}}
           onMouseLeave={e=>{e.currentTarget.style.background=closeBg;e.currentTarget.style.transform="scale(1)";}}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
 
         {/* Header */}
         <div style={{ textAlign:"center",marginBottom:28 }}>
-          <span style={{ fontFamily:"'Space Mono',monospace",fontSize:11,letterSpacing:3,textTransform:"uppercase",color:"#8F00FF",display:"block",marginBottom:8 }}>// Adquirir Sistema</span>
+          <span style={{ fontFamily:"'Space Mono',monospace",fontSize:11,letterSpacing:3,textTransform:"uppercase",color:"#7C3AED",display:"block",marginBottom:8 }}>// Adquirir Sistema</span>
           <h2 style={{ fontSize:"clamp(20px,4vw,30px)",fontWeight:800,fontFamily:"'Monda',sans-serif",color:textPrim,lineHeight:1.2 }}>
             Dashboard Admin <span className="glow-text">SaaS</span>
           </h2>
@@ -145,7 +145,7 @@ function PreciosModal({ dark, onClose, accent }) {
               <a
                 href="https://wa.me/51960959529?text=Hola%2C%20me%20interesa%20el%20sistema%20de%20restaurante"
                 target="_blank" rel="noopener noreferrer"
-                style={{ display:"block",marginTop:16,textAlign:"center",padding:"10px 0",borderRadius:10,fontSize:13,fontWeight:700,fontFamily:"'Syne',sans-serif",textDecoration:"none",cursor:"pointer",background:plan.featured?"linear-gradient(135deg,#8F00FF,#AE35FF)":"transparent",color:plan.featured?"#fff":accent,border:plan.featured?"none":`1.5px solid ${accent}`,transition:"opacity .2s" }}
+                style={{ display:"block",marginTop:16,textAlign:"center",padding:"10px 0",borderRadius:10,fontSize:13,fontWeight:700,fontFamily:"'Syne',sans-serif",textDecoration:"none",cursor:"pointer",background:plan.featured?"linear-gradient(135deg,#7C3AED,#9333EA)":"transparent",color:plan.featured?"#fff":accent,border:plan.featured?"none":`1.5px solid ${accent}`,transition:"opacity .2s" }}
                 onMouseEnter={e=>e.currentTarget.style.opacity="0.82"}
                 onMouseLeave={e=>e.currentTarget.style.opacity="1"}
               >
@@ -187,7 +187,7 @@ function ProjectCard({ project, index, dark, onExpandImage, onAdquirir }) {
           {project.showAdquirir && (
             <button
               onClick={(e)=>{e.stopPropagation();onAdquirir&&onAdquirir(project);}}
-              style={{ background:"linear-gradient(135deg,#8F00FF,#AE35FF)",color:"#fff",border:"none",borderRadius:8,padding:"6px 14px",fontSize:12,fontWeight:700,fontFamily:"'Syne',sans-serif",cursor:"pointer",transition:"opacity .2s, transform .2s",boxShadow:"0 2px 12px #8F00FF44" }}
+              style={{ background:"linear-gradient(135deg,#7C3AED,#9333EA)",color:"#fff",border:"none",borderRadius:8,padding:"6px 14px",fontSize:12,fontWeight:700,fontFamily:"'Syne',sans-serif",cursor:"pointer",transition:"opacity .2s, transform .2s",boxShadow:"0 2px 12px #7C3AED44" }}
               onMouseEnter={e=>{e.currentTarget.style.opacity="0.85";e.currentTarget.style.transform="scale(1.04)";}}
               onMouseLeave={e=>{e.currentTarget.style.opacity="1";e.currentTarget.style.transform="scale(1)";}}
             >
@@ -228,7 +228,7 @@ export default function ProjectModal({ category, accent, onClose, dark, T }) {
           <div className={styles.modalBar} style={{ background:`linear-gradient(90deg, ${accent}, ${accent}66, transparent)` }} />
           <div className={styles.modalHeader}>
             <div>
-              <span className={styles.modalTag} style={{ color:"#8F00FF" }}>// Proyectos</span>
+              <span className={styles.modalTag} style={{ color:"#7C3AED" }}>// Proyectos</span>
               <h2 className={styles.modalTitle} style={{ color: dark ? "#e8e8f0" : "#0a0a0a" }}>
                 {category.split(" ").slice(0,-1).join(" ")}{" "}
                 <span className="glow-text">{category.split(" ").slice(-1)[0]}</span>
@@ -237,8 +237,8 @@ export default function ProjectModal({ category, accent, onClose, dark, T }) {
                 {projects.length} proyecto{projects.length!==1?"s":""} en esta categoría
               </p>
             </div>
-            <button className={styles.closeBtn} onClick={onClose} aria-label="Cerrar" style={{ background: dark?"#1a0a2e":"#ede5ff",border:"1.5px solid #8F00FF33" }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <button className={styles.closeBtn} onClick={onClose} aria-label="Cerrar" style={{ background: dark?"#1a0a2e":"#ede5ff",border:"1.5px solid #7C3AED33" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
           </div>
           <div className={styles.modalGrid}>

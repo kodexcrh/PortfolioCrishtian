@@ -11,7 +11,7 @@ const EXPERIENCES = [
     period: "2025 – Presente",
     status: "Activo",
     statusColor: "#A8EB12",
-    accent: "#8F00FF",
+    accent: "#7C3AED",
     icon: "⚛️",
     desc: "Desarrollo de interfaces web con React JS, dashboards con Power BI y automatización de flujos con n8n para clientes de Perú y Latinoamérica.",
     achievements: [
@@ -94,9 +94,9 @@ export default function ExperienciasModal({ onClose, dark, T }) {
             className={styles.closeBtn}
             onClick={onClose}
             aria-label="Cerrar"
-            style={{ background: dark ? "#1a0a2e" : "#ede5ff", border: "1.5px solid #8F00FF33" }}
+            style={{ background: dark ? "#1a0a2e" : "#ede5ff", border: "1.5px solid #7C3AED33" }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AE35FF" strokeWidth="2.5" strokeLinecap="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2.5" strokeLinecap="round">
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>

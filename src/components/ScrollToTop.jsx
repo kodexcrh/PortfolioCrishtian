@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./ScrollToTop.module.css";
-import logoImg from "../assets/LOGO-CLOUD-CODERS-transparente.png";
+import logoImg from "../assets/BotonFlotante.png";
 
 /*
   ScrollToTop

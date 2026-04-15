@@ -7,7 +7,7 @@ import styles from "./Proyectos.module.css";
 
 export default function Proyectos({ dark, T }) {
   const [openCategory, setOpenCategory] = useState(null);
-  const [openAccent,   setOpenAccent]   = useState("#8F00FF");
+  const [openAccent,   setOpenAccent]   = useState("#7C3AED");
   const [hoveredIdx,   setHoveredIdx]   = useState(null);
 
   const handleOpen = (title, accent) => {

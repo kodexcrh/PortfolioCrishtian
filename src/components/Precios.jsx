@@ -56,7 +56,7 @@ export default function Precios({ dark, T }) {
                 <div className="plan-tabs" style={{ background: dark ? "#0a0a18" : "#ede5ff" }}>
                   {AUTO_PLANS.map((p) => (
                     <button key={p.id} className="plan-tab" onClick={() => setSelectedPlan(p.id)}
-                      style={{ background: selectedPlan === p.id ? p.color : "transparent", color: selectedPlan === p.id ? "#fff" : T.textSub, borderRight: p.id !== "advanced" ? "1px solid #8F00FF22" : "none" }}>
+                      style={{ background: selectedPlan === p.id ? p.color : "transparent", color: selectedPlan === p.id ? "#fff" : T.textSub, borderRight: p.id !== "advanced" ? "1px solid #7C3AED22" : "none" }}>
                       {p.label}
                     </button>
                   ))}

@@ -24,6 +24,19 @@ import Precios from "./components/Precios";
 import Testimonials from "./components/Testimonials";
 import Contacto from "./components/Contacto";
 import SectionDivider from "./components/SectionDivider";
+import DotGridBackground from "./components/DotGridBackground";
+
+// Wrapper reutilizable: position:relative + overflow:hidden
+// Garantiza que DotGridBackground (position:absolute inset:0)
+// tome el tamaño real del contenido de cada sección.
+function SectionWrapper({ children, dark, intensity = 0.9 }) {
+  return (
+    <div style={{ position: "relative", overflow: "hidden" }}>
+      <DotGridBackground dark={dark} intensity={intensity} />
+      {children}
+    </div>
+  );
+}
 
 export default function Portfolio() {
   const [dark, setDark] = useState(() => {
@@ -84,21 +97,54 @@ export default function Portfolio() {
       <Navbar dark={dark} toggleTheme={toggleTheme} T={T} />
 
       <div style={{ position: "relative", zIndex: 1 }}>
-        <Hero         dark={dark} T={T} />
+
+        {/* Hero sin dot grid para no chocar con el hero visual */}
+        <SectionWrapper dark={dark} intensity={0.9}>
+          <Hero dark={dark} T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <SobreMi      dark={dark} T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.9}>
+          <SobreMi dark={dark} T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <Servicios                T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.8}>
+          <Servicios T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <Proyectos    dark={dark} T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.7}>
+          <Proyectos dark={dark} T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <Stack        dark={dark} T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.9}>
+          <Stack dark={dark} T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <Precios      dark={dark} T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.8}>
+          <Precios dark={dark} T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <Testimonials dark={dark} T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.7}>
+          <Testimonials dark={dark} T={T} />
+        </SectionWrapper>
+
         <SectionDivider dark={dark} />
-        <Contacto     dark={dark} T={T} />
+
+        <SectionWrapper dark={dark} intensity={0.9}>
+          <Contacto dark={dark} T={T} />
+        </SectionWrapper>
+
       </div>
 
       <Footer T={T} dark={dark} />

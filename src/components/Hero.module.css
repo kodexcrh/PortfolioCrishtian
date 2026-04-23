@@ -32,7 +32,7 @@
   font-family: 'Space Mono', monospace;
   font-size: clamp(16px, 2.2vw, 22px);
   font-weight: 700;
-  color: #7C3AED;
+  color: var(--clr-accent);
   letter-spacing: -0.5px;
 }
 
@@ -40,7 +40,7 @@
   font-family: 'Space Mono', monospace;
   font-size: clamp(16px, 2.2vw, 22px);
   font-weight: 400;
-  color: #9333EA;
+  color: var(--clr-accent2);
   animation: blink .75s step-end infinite;
   line-height: 1;
 }
@@ -92,7 +92,7 @@
   width: 28%;
   height: 28%;
   border-radius: 50%;
-  background: linear-gradient(135deg, #01D4E8, #1de3f3, #63f4fd);
+  background: linear-gradient(135deg, var(--clr-cyan), var(--clr-cyan), var(--clr-cyan));
   box-shadow:
     0 0 40px #01D4E8aa,
     0 0 80px #1de3f355,
@@ -141,9 +141,9 @@
 
 .logoChip:hover {
   transform: translate(-50%, -50%) scale(1.22);
-  box-shadow: 0 0 20px color-mix(in srgb, var(--chip-color, #7C3AED) 60%, transparent),
-              0 0 40px color-mix(in srgb, var(--chip-color, #7C3AED) 30%, transparent) !important;
-  border-color: var(--chip-color, #7C3AED) !important;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--chip-color, var(--clr-accent)) 60%, transparent),
+              0 0 40px color-mix(in srgb, var(--chip-color, var(--clr-accent)) 30%, transparent) !important;
+  border-color: var(--chip-color, var(--clr-accent)) !important;
   z-index: 10;
 }
 

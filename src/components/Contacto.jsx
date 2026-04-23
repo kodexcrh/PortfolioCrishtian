@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { SOCIAL_LINKS } from "../constants";
 import Reveal from "./Reveal";
@@ -6,11 +6,56 @@ import styles from "./Contacto.module.css";
 import { FaGithub, FaLinkedin, FaBolt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
-// ══ Reemplaza estos valores con los de tu cuenta EmailJS ══════
-const EMAILJS_SERVICE_ID  = "service_7zr380q";
-const EMAILJS_TEMPLATE_ID = "template_dz4npho";
-const EMAILJS_PUBLIC_KEY  = "UOQiUMKTXFhOOUCoz";
+// ── EmailJS — variables de entorno (.env) ────────────────────
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+// ── Seguridad: Rate Limit ─────────────────────────────────────
+const RATE_LIMIT_KEY    = "cc_contact_attempts";
+const RATE_LIMIT_MAX    = 3;
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hora en ms
+
+function checkRateLimit() {
+  try {
+    const raw    = localStorage.getItem(RATE_LIMIT_KEY);
+    const now    = Date.now();
+    const list   = raw ? JSON.parse(raw) : [];
+    const recent = list.filter((t) => now - t < RATE_LIMIT_WINDOW);
+    if (recent.length >= RATE_LIMIT_MAX) return false;
+    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify([...recent, now]));
+    return true;
+  } catch {
+    return true;
+  }
+}
+
+function getRemainingMinutes() {
+  try {
+    const raw    = localStorage.getItem(RATE_LIMIT_KEY);
+    const now    = Date.now();
+    const list   = raw ? JSON.parse(raw) : [];
+    const recent = list.filter((t) => now - t < RATE_LIMIT_WINDOW);
+    if (recent.length < RATE_LIMIT_MAX) return 0;
+    const oldest = Math.min(...recent);
+    return Math.ceil((RATE_LIMIT_WINDOW - (now - oldest)) / 60000);
+  } catch {
+    return 0;
+  }
+}
+
+// ── Seguridad: Sanitización ───────────────────────────────────
+function sanitize(value) {
+  return value
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/javascript:/gi, "")
+    .replace(/on\w+\s*=/gi, "")
+    .replace(/script/gi, "")
+    .trim();
+}
+
+// ─────────────────────────────────────────────────────────────
 const SERVICIOS = [
   "Desarrollo Frontend (React JS)",
   "Dashboard Power BI",
@@ -20,18 +65,21 @@ const SERVICIOS = [
 ];
 
 export default function Contacto({ dark, T }) {
-  const formRef = useRef(null);
-  const [copied, setCopied]     = useState(false);
+  const formRef   = useRef(null);
+  const mountTime = useRef(Date.now());
+
+  const [copied,    setCopied]    = useState(false);
   const [hovSocial, setHovSocial] = useState(null);
-  const [status, setStatus]     = useState("idle"); // idle | sending | success | error
-  const [form, setForm]         = useState({
-    nombre:   "",
-    email:    "",
-    telefono: "",
-    servicio: "",
-    mensaje:  "",
+  const [status,    setStatus]    = useState("idle");
+  const [form,      setForm]      = useState({
+    nombre: "", email: "", telefono: "", servicio: "", mensaje: "",
   });
-  const [errors, setErrors]     = useState({});
+  const [errors,   setErrors]   = useState({});
+  const [honeypot, setHoneypot] = useState("");
+
+  useEffect(() => {
+    if (status === "idle") mountTime.current = Date.now();
+  }, [status]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText("cloudcoders.c2@gmail.com");
@@ -40,12 +88,11 @@ export default function Contacto({ dark, T }) {
   };
 
   const contactItems = [
-    { label: "Email",    icon: <MdEmail />, display: copied ? "✓ Copiado!" : "cloudcoders.c2@gmail.com", action: handleCopy },
+    { label: "Email",    icon: <MdEmail />,    display: copied ? "✓ Copiado!" : "cloudcoders.c2@gmail.com", action: handleCopy },
     { label: "LinkedIn", icon: <FaLinkedin />, display: "crishtian rodriguez herrera" },
-    { label: "GitHub",   icon: <FaGithub />, display: "@cloudcoders-C2" },
+    { label: "GitHub",   icon: <FaGithub />,   display: "@cloudcoders-C2" },
   ];
 
-  // Valida un campo individual
   const validateField = (name, value) => {
     switch (name) {
       case "nombre":
@@ -69,10 +116,9 @@ export default function Contacto({ dark, T }) {
     }
   };
 
-  // Valida todos los campos al enviar
   const validate = () => {
     const e = {};
-    ["nombre", "email", "servicio", "mensaje"].forEach(field => {
+    ["nombre", "email", "servicio", "mensaje"].forEach((field) => {
       const err = validateField(field, form[field]);
       if (err) e[field] = err;
     });
@@ -81,27 +127,57 @@ export default function Contacto({ dark, T }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Bloquear números y caracteres especiales en nombre
-    if (name === "nombre" && value !== "" && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]*$/.test(value)) return;
-    // Bloquear letras en teléfono — solo números, +, espacios y guiones
+    if (name === "nombre"   && value !== "" && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]*$/.test(value)) return;
     if (name === "telefono" && value !== "" && !/^[0-9+\s-]*$/.test(value)) return;
-    setForm(prev => ({ ...prev, [name]: value }));
-    // Validación en tiempo real solo si ya hubo un intento de envío o el campo fue tocado
+    setForm((prev) => ({ ...prev, [name]: value }));
     const err = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: err }));
+    setErrors((prev) => ({ ...prev, [name]: err }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Capa 1: Honeypot
+    if (honeypot.trim() !== "") {
+      setStatus("success");
+      setTimeout(() => setStatus("idle"), 5000);
+      return;
+    }
+
+    // Capa 2: Timing check (< 3s = bot)
+    const elapsed = (Date.now() - mountTime.current) / 1000;
+    if (elapsed < 3) {
+      setStatus("bot");
+      setTimeout(() => setStatus("idle"), 4000);
+      return;
+    }
+
+    // Capa 3: Rate limit
+    if (!checkRateLimit()) {
+      setStatus("ratelimit");
+      return;
+    }
+
+    // Validación de campos
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
     setStatus("sending");
+
+    // Capa 4: Sanitizar inputs
+    const sanitizedForm = {
+      nombre:   sanitize(form.nombre),
+      email:    sanitize(form.email),
+      telefono: sanitize(form.telefono),
+      servicio: sanitize(form.servicio),
+      mensaje:  sanitize(form.mensaje),
+    };
+
     try {
-      await emailjs.sendForm(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        formRef.current,
+        sanitizedForm,
         EMAILJS_PUBLIC_KEY
       );
       setStatus("success");
@@ -113,6 +189,9 @@ export default function Contacto({ dark, T }) {
     }
   };
 
+  const isRateLimited = status === "ratelimit";
+  const minutesLeft   = isRateLimited ? getRemainingMinutes() : 0;
+
   return (
     <section id="contacto" className="sec">
       <div className="c">
@@ -120,7 +199,6 @@ export default function Contacto({ dark, T }) {
         <Reveal delay={80}><h2 className="sh2">¿Tienes un <span className="glow-text">proyecto</span>?</h2></Reveal>
         <Reveal delay={140}><p className="sdesc" style={{ color: T.textSub }}>Disponible para proyectos freelance, colaboraciones y oportunidades interesantes.</p></Reveal>
 
-        {/* Redes sociales */}
         <Reveal delay={180}>
           <div style={{ marginBottom: 32 }}>
             <div className={styles.socialLabel} style={{ color: T.textFaint }}>Redes sociales</div>
@@ -128,14 +206,16 @@ export default function Contacto({ dark, T }) {
               {SOCIAL_LINKS.map((s) => (
                 <div key={s.name + "c"} className="social-wrap">
                   <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                    <button className="social-btn"
+                    <button
+                      className="social-btn"
                       onMouseEnter={() => setHovSocial(s.name + "c")}
                       onMouseLeave={() => setHovSocial(null)}
                       style={{
                         background: hovSocial === s.name + "c" ? s.bg : (dark ? "#0f0f1e" : "#f0eaff"),
                         border: hovSocial === s.name + "c" ? "1.5px solid transparent" : "1.5px solid #7C3AED22",
-                        boxShadow: hovSocial === s.name + "c" ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}` : "none"
-                      }}>
+                        boxShadow: hovSocial === s.name + "c" ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}` : "none",
+                      }}
+                    >
                       {s.icon(hovSocial === s.name + "c" ? "#fff" : dark ? "#aaa" : "#6633aa")}
                     </button>
                   </a>
@@ -146,12 +226,15 @@ export default function Contacto({ dark, T }) {
           </div>
         </Reveal>
 
-        {/* Info cards */}
         <div className="cgrid" style={{ marginBottom: 40 }}>
           {contactItems.map((item, i) => (
             <Reveal key={item.label} delay={i * 90}>
               <div className="card-hover-wrap">
-                <div className={styles.card} style={{ background: T.bgCard2, cursor: item.action ? "pointer" : "default" }} onClick={item.action}>
+                <div
+                  className={styles.card}
+                  style={{ background: T.bgCard2, cursor: item.action ? "pointer" : "default" }}
+                  onClick={item.action}
+                >
                   <span className={styles.cardIcon}>{item.icon}</span>
                   <div style={{ minWidth: 0 }}>
                     <div className={styles.cardLabel} style={{ color: T.textFaint }}>{item.label}</div>
@@ -163,28 +246,47 @@ export default function Contacto({ dark, T }) {
           ))}
         </div>
 
-        {/* ── Formulario ── */}
         <Reveal delay={200}>
-          <div className={styles.formWrap} style={{ background: dark ? "linear-gradient(135deg,#0f0f1e,#12121f)" : "linear-gradient(135deg,#ffffff,#faf5ff)", border: "1px solid #7C3AED22" }}>
+          <div
+            className={styles.formWrap}
+            style={{
+              background: dark ? "linear-gradient(135deg,#0f0f1e,#12121f)" : "linear-gradient(135deg,#ffffff,#faf5ff)",
+              border: "1px solid #7C3AED22",
+            }}
+          >
             <div className={styles.formTop} />
-
-            <h3 className={styles.formTitle} style={{ color: T.text }}>
-              Envíame un mensaje
-            </h3>
+            <h3 className={styles.formTitle} style={{ color: T.text }}>Envíame un mensaje</h3>
             <p className={styles.formSub} style={{ color: T.textSub }}>
               Respondo en menos de 24 horas <span className={styles.icon}>{<FaBolt />}</span>
             </p>
 
             <form ref={formRef} onSubmit={handleSubmit} className={styles.form} noValidate>
 
-              {/* Fila 1 — Nombre + Email */}
+              {/* 🍯 Honeypot — invisible para humanos */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute", left: "-9999px", top: "-9999px",
+                  width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none",
+                }}
+              >
+                <label htmlFor="cc_website">Website</label>
+                <input
+                  id="cc_website"
+                  name="cc_website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+
               <div className={styles.row2}>
                 <div className={styles.field}>
                   <label className={styles.label} style={{ color: T.textFaint }}>Nombre *</label>
                   <input
-                    name="nombre"
-                    value={form.nombre}
-                    onChange={handleChange}
+                    name="nombre" value={form.nombre} onChange={handleChange}
                     placeholder="Tu nombre completo"
                     className={`${styles.input} ${errors.nombre ? styles.inputError : ""}`}
                     style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.nombre ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
@@ -194,10 +296,7 @@ export default function Contacto({ dark, T }) {
                 <div className={styles.field}>
                   <label className={styles.label} style={{ color: T.textFaint }}>Email *</label>
                   <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
+                    name="email" type="email" value={form.email} onChange={handleChange}
                     placeholder="tu@email.com"
                     className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
                     style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.email ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
@@ -206,42 +305,33 @@ export default function Contacto({ dark, T }) {
                 </div>
               </div>
 
-              {/* Fila 2 — Teléfono + Servicio */}
               <div className={styles.row2}>
                 <div className={styles.field}>
                   <label className={styles.label} style={{ color: T.textFaint }}>Teléfono / WhatsApp</label>
                   <input
-                    name="telefono"
-                    value={form.telefono}
-                    onChange={handleChange}
-                    placeholder="+51 999 999 999"
-                    className={styles.input}
+                    name="telefono" value={form.telefono} onChange={handleChange}
+                    placeholder="+51 999 999 999" className={styles.input}
                     style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: dark ? "#7C3AED22" : "#7C3AED18" }}
                   />
                 </div>
                 <div className={styles.field}>
                   <label className={styles.label} style={{ color: T.textFaint }}>Tipo de servicio *</label>
                   <select
-                    name="servicio"
-                    value={form.servicio}
-                    onChange={handleChange}
+                    name="servicio" value={form.servicio} onChange={handleChange}
                     className={`${styles.input} ${styles.select} ${errors.servicio ? styles.inputError : ""}`}
                     style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: form.servicio ? T.text : T.textFaint, borderColor: errors.servicio ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
                   >
                     <option value="" disabled>Selecciona un servicio</option>
-                    {SERVICIOS.map(s => <option key={s} value={s}>{s}</option>)}
+                    {SERVICIOS.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                   {errors.servicio && <span className={styles.error}>{errors.servicio}</span>}
                 </div>
               </div>
 
-              {/* Mensaje */}
               <div className={styles.field}>
                 <label className={styles.label} style={{ color: T.textFaint }}>Mensaje *</label>
                 <textarea
-                  name="mensaje"
-                  value={form.mensaje}
-                  onChange={handleChange}
+                  name="mensaje" value={form.mensaje} onChange={handleChange}
                   placeholder="Cuéntame sobre tu proyecto, qué necesitas y en qué plazo..."
                   rows={5}
                   className={`${styles.input} ${styles.textarea} ${errors.mensaje ? styles.inputError : ""}`}
@@ -253,23 +343,21 @@ export default function Contacto({ dark, T }) {
                 {errors.mensaje && <span className={styles.error}>{errors.mensaje}</span>}
               </div>
 
-              {/* Botón submit */}
               <button
                 type="submit"
                 className={`btn-p ${styles.submitBtn}`}
-                disabled={status === "sending"}
-                style={{ opacity: status === "sending" ? 0.7 : 1 }}
+                disabled={status === "sending" || isRateLimited}
+                style={{ opacity: status === "sending" || isRateLimited ? 0.7 : 1 }}
               >
-                {status === "sending" && (
-                  <span className={styles.spinner} />
-                )}
-                {status === "idle"    && "Enviar mensaje ✉️"}
-                {status === "sending" && "Enviando..."}
-                {status === "success" && "✅ ¡Mensaje enviado!"}
-                {status === "error"   && "❌ Error, intenta de nuevo"}
+                {status === "sending"   && <span className={styles.spinner} />}
+                {status === "idle"      && "Enviar mensaje ✉️"}
+                {status === "sending"   && "Enviando..."}
+                {status === "success"   && "✅ ¡Mensaje enviado!"}
+                {status === "error"     && "❌ Error, intenta de nuevo"}
+                {status === "bot"       && "⏳ Espera un momento..."}
+                {status === "ratelimit" && `⏳ Intenta en ${minutesLeft} min`}
               </button>
 
-              {/* Feedback */}
               {status === "success" && (
                 <div className={styles.feedback} style={{ background: "#A8EB1218", border: "1px solid #A8EB1244", color: "#A8EB12" }}>
                   🎉 ¡Gracias! Recibirás respuesta en menos de 24 horas.
@@ -277,7 +365,12 @@ export default function Contacto({ dark, T }) {
               )}
               {status === "error" && (
                 <div className={styles.feedback} style={{ background: "#ef535018", border: "1px solid #ef535044", color: "#ef5350" }}>
-                  Hubo un problema al enviar. Por favor intenta de nuevo o escríbeme directamente a hola@cloudcoders.dev
+                  Hubo un problema al enviar. Por favor intenta de nuevo o escríbeme por WhatsApp.
+                </div>
+              )}
+              {isRateLimited && (
+                <div className={styles.feedback} style={{ background: "#ffc75f18", border: "1px solid #ffc75f44", color: "#ffc75f" }}>
+                  🚦 Demasiados intentos. Vuelve en {minutesLeft} minuto{minutesLeft !== 1 ? "s" : ""}.
                 </div>
               )}
             </form>

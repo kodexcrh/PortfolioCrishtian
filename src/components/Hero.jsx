@@ -41,10 +41,10 @@ const PostgreSQLIcon = () => (
 const RING1_LOGOS = [
   { name: "React JS",    color: "#61DAFB", angle: 0   },
   { name: "Power BI",    color: "#F2C811", angle: 120 },
-  { name: "Claude AI",   color: "#ff8c00", angle: 240 },
+  { name: "n8n",         color: "#EA4B71", angle: 240 },
 ];
 const RING2_LOGOS = [
-  { name: "n8n",          color: "#EA4B71", angle: 60  },
+  { name: "Claude AI",    color: "#ff8c00", angle: 60  },
   { name: "JavaScript",   color: "#F7DF1E", angle: 180 },
   { name: "Tailwind CSS", color: "#38BDF8", angle: 300 },
   { name: "PostgreSQL",   color: "#336791", angle: 0   },

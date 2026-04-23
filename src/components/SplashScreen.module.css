@@ -3,7 +3,7 @@
 .splash {
   position: fixed; inset: 0; z-index: 9999;
   display: flex; align-items: center; justify-content: center;
-  background: #0B0F19;
+  background: var(--clr-bg);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .exit {
@@ -99,7 +99,7 @@
   /* top/height cubre la altura del logo */
   top: 8%; height: 84%;
   width: 3px;
-  background: #FF3E81;
+  background: var(--clr-pink);
   border-radius: 2px;
   transform: translateX(-1px); /* centrado perfecto sobre el borde */
   animation: blink 0.55s steps(1) infinite;
@@ -121,7 +121,7 @@
 /* ── Bordes animados ─────────────────────────────────────────────── */
 .borderTop, .borderBottom {
   height: 2px;
-  background: linear-gradient(90deg, #7C3AED, #FF3E81);
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-pink));
   border-radius: 2px;
   box-shadow: 0 0 8px rgba(124,58,237,.5);
   /* sin transition — JS anima frame a frame */
@@ -134,7 +134,7 @@
   font-size: clamp(10px, 1.4vw, 13px);
   letter-spacing: 3.5px;
   text-transform: uppercase;
-  color: #9CA3AF;
+  color: var(--clr-text2);
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
@@ -147,8 +147,8 @@
 
 .subtitleDot {
   display: inline-block; width: 5px; height: 5px;
-  border-radius: 50%; background: #FF3E81;
-  box-shadow: 0 0 6px #FF3E81;
+  border-radius: 50%; background: var(--clr-pink);
+  box-shadow: 0 0 6px var(--clr-pink);
 }
 
 /* ── Versión (aparece en hold) ───────────────────────────────────── */
@@ -173,13 +173,13 @@
   animation: cornerPulse 2.4s ease-in-out infinite;
 }
 .cornerTL { top: 18px; left: 18px;
-  border-top: 2px solid #7C3AED; border-left: 2px solid #7C3AED; }
+  border-top: 2px solid var(--clr-accent); border-left: 2px solid var(--clr-accent); }
 .cornerTR { top: 18px; right: 18px;
-  border-top: 2px solid #01D4E8; border-right: 2px solid #01D4E8; animation-delay: 0.6s; }
+  border-top: 2px solid var(--clr-cyan); border-right: 2px solid var(--clr-cyan); animation-delay: 0.6s; }
 .cornerBL { bottom: 18px; left: 18px;
-  border-bottom: 2px solid #FF3E81; border-left: 2px solid #FF3E81; animation-delay: 1.2s; }
+  border-bottom: 2px solid var(--clr-pink); border-left: 2px solid var(--clr-pink); animation-delay: 1.2s; }
 .cornerBR { bottom: 18px; right: 18px;
-  border-bottom: 2px solid #FEC303; border-right: 2px solid #FEC303; animation-delay: 1.8s; }
+  border-bottom: 2px solid var(--clr-gold); border-right: 2px solid var(--clr-gold); animation-delay: 1.8s; }
 
 @keyframes cornerPulse {
   0%, 100% { opacity: .35 }
@@ -195,7 +195,7 @@
 
 .loadBar {
   height: 100%;
-  background: linear-gradient(90deg, #7C3AED, #FF3E81, #01D4E8);
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-pink), var(--clr-cyan));
   border-radius: 0 2px 2px 0;
   box-shadow: 0 0 12px rgba(124,58,237,.7);
   /* sin transition — JS anima */
@@ -232,14 +232,14 @@
   animation: particleFloat 6s ease-in-out infinite;
   pointer-events: none;
 }
-.p1 { width:4px; height:4px; background:#7C3AED; top:15%; left:10%; animation-delay:0s; }
-.p2 { width:3px; height:3px; background:#FF3E81; top:25%; right:15%; animation-delay:1s; }
-.p3 { width:5px; height:5px; background:#01D4E8; bottom:30%; left:20%; animation-delay:2s; }
-.p4 { width:3px; height:3px; background:#FEC303; bottom:20%; right:25%; animation-delay:0.5s; }
-.p5 { width:4px; height:4px; background:#7C3AED; top:40%; left:5%; animation-delay:3s; }
-.p6 { width:3px; height:3px; background:#FF3E81; top:60%; right:8%; animation-delay:1.5s; }
-.p7 { width:5px; height:5px; background:#01D4E8; top:80%; left:40%; animation-delay:2.5s; }
-.p8 { width:3px; height:3px; background:#FEC303; top:10%; right:40%; animation-delay:4s; }
+.p1 { width:4px; height:4px; background:var(--clr-accent); top:15%; left:10%; animation-delay:0s; }
+.p2 { width:3px; height:3px; background:var(--clr-pink); top:25%; right:15%; animation-delay:1s; }
+.p3 { width:5px; height:5px; background:var(--clr-cyan); bottom:30%; left:20%; animation-delay:2s; }
+.p4 { width:3px; height:3px; background:var(--clr-gold); bottom:20%; right:25%; animation-delay:0.5s; }
+.p5 { width:4px; height:4px; background:var(--clr-accent); top:40%; left:5%; animation-delay:3s; }
+.p6 { width:3px; height:3px; background:var(--clr-pink); top:60%; right:8%; animation-delay:1.5s; }
+.p7 { width:5px; height:5px; background:var(--clr-cyan); top:80%; left:40%; animation-delay:2.5s; }
+.p8 { width:3px; height:3px; background:var(--clr-gold); top:10%; right:40%; animation-delay:4s; }
 
 @keyframes particleFloat {
   0%, 100% { transform: translateY(0) scale(1); opacity: .35; }

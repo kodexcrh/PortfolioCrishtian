@@ -32,7 +32,7 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #7C3AED, #9333EA, #A8EB12);
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent2), #A8EB12);
   border-radius: 4px 4px 0 0;
 }
 
@@ -93,11 +93,11 @@
 }
 
 .input:focus {
-  border-color: #7C3AED !important;
+  border-color: var(--clr-accent) !important;
   box-shadow: 0 0 0 3px #7C3AED18;
 }
 
-.input::placeholder { color: #44445e; }
+.input::placeholder { color: var(--clr-text3); }
 
 .inputError {
   border-color: #ef5350 !important;

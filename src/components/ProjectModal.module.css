@@ -6,11 +6,18 @@
   backdrop-filter: blur(8px);
   z-index: 500;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 72px 16px 24px; /* 72px = navbar ~60px + 12px margen */
   overflow-y: auto;
   animation: fadeIn .25s ease;
+}
+
+@media (min-width: 768px) {
+  .overlay {
+    align-items: flex-start;
+    padding: 80px 24px 24px; /* 80px = navbar desktop + margen */
+  }
 }
 
 @keyframes fadeIn {
@@ -23,7 +30,7 @@
   position: relative;
   width: 100%;
   max-width: 1120px;
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 96px);
   overflow-y: auto;
   border-radius: 24px;
   border: 1px solid #7C3AED22;
@@ -34,6 +41,12 @@
   scrollbar-width: thin;
   scrollbar-color: #7C3AED44 transparent;
   margin: auto;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    max-height: calc(100vh - 104px); /* 80px padding-top + 24px padding-bottom */
+  }
 }
 
 @keyframes slideUp {
@@ -197,7 +210,7 @@
 .pCardDetail {
   font-size: 13px;
   line-height: 1.7;
-  color: #8888a8;
+  color: var(--clr-text3);
   flex: 1;
   font-family: 'Syne', sans-serif;
 }
@@ -226,7 +239,7 @@
 .pYear {
   font-size: 11px;
   font-family: 'Space Mono', monospace;
-  color: #44445e;
+  color: var(--clr-text3);
 }
 
 .pLink {
@@ -243,7 +256,7 @@
 .pLinkDisabled {
   font-size: 12px;
   font-family: 'Space Mono', monospace;
-  color: #44445e;
+  color: var(--clr-text3);
 }
 
 /* ── Image preview ───────────────────────────────────────────── */
@@ -338,7 +351,7 @@
 
 .lightboxTitle {
   margin-top: 16px;
-  color: #e8e8f0;
+  color: var(--clr-text);
   font-family: 'Syne', sans-serif;
   font-size: 14px;
   font-weight: 600;

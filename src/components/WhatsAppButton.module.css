@@ -71,7 +71,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid #07070f;
+  border: 1.5px solid var(--clr-bg);
   animation: badgePulse 2s ease-in-out infinite;
 }
 

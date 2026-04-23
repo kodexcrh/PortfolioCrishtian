@@ -66,7 +66,7 @@
   height: 2px;
   width: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #FF3E81  , #FF3E81);
+  background: linear-gradient(90deg, var(--clr-pink)  , var(--clr-pink));
   box-shadow: 0 0 8px #FF3E8188;
   /* Animación de entrada/salida con scaleX */
   transform-origin: center;
@@ -105,7 +105,7 @@
 }
 
 .cvBtn:hover {
-  background: linear-gradient(135deg, #FF3E81, #FF3E81);
+  background: linear-gradient(135deg, var(--clr-pink), var(--clr-pink));
   border-color: transparent;
   color: #fff;
   transform: translateY(-2px);
@@ -120,7 +120,7 @@
 .cvBtnDone {
   border-color: #01D4E866 !important;
   background: #01D4E818 !important;
-  color: #01D4E8 !important;
+  color: var(--clr-cyan) !important;
 }
 
 .cvIcon {

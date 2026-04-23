@@ -30,11 +30,11 @@
   border-radius: 27px;
   background: conic-gradient(
     from var(--angle, 0deg),
-    #7C3AED,
+    var(--clr-accent),
     #A8EB12,
-    #4ffbdf,
-    #9333EA,
-    #7C3AED
+    var(--clr-cyan),
+    var(--clr-accent2),
+    var(--clr-accent)
   );
   z-index: 0;
   animation: spinRing 4s linear infinite;
@@ -53,7 +53,7 @@
 /* Fallback para navegadores sin @property */
 @supports not (background: conic-gradient(from 0deg, red, blue)) {
   .photoRing {
-    background: linear-gradient(135deg, #7C3AED, #A8EB12, #4ffbdf, #9333EA);
+    background: linear-gradient(135deg, var(--clr-accent), #A8EB12, var(--clr-cyan), var(--clr-accent2));
     opacity: 0.6;
   }
 }
@@ -64,7 +64,7 @@
   position: absolute;
   inset: 2px;
   border-radius: 23px;
-  background: #07071a;
+  background: var(--clr-bg);
   z-index: 0;
 }
 
@@ -94,7 +94,7 @@
   width: 100%;
   border-radius: 24px;
   aspect-ratio: 3 / 4;
-  background: linear-gradient(135deg, #1a0a2e, #0f0f1e);
+  background: linear-gradient(135deg, var(--clr-bg), var(--clr-bg));
   display: flex;
   flex-direction: column;
   align-items: center;

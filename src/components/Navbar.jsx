@@ -103,7 +103,7 @@ export default function Navbar({ dark, toggleTheme, T }) {
           style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", flexShrink: 0 }}
           onClick={() => scrollToSection("Inicio")}
         >
-          <img src={LogoNavbar} alt="CloudCoders" style={{ height: "34px", width: "auto" }} />
+          <img src={LogoNavbar} alt="Kodex" style={{ height: "34px", width: "auto" }} />
 
           
         </div>
@@ -140,7 +140,7 @@ export default function Navbar({ dark, toggleTheme, T }) {
 
           {/* Botón descargar CV */}
           <a
-            href="/crishtian-cv.pdf"
+            href="/kodex-cv.pdf"
             download="CV-Crishtian-Rodriguez.pdf"
             className={`${styles.cvBtn} ${downloaded ? styles.cvBtnDone : ""}`}
             title="Descargar CV"

@@ -80,13 +80,13 @@ export default function Contacto({ dark, T }) {
   }, [status]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("cloudcoders.c2@gmail.com");
+    navigator.clipboard.writeText("kodex.crh@proton.me");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const contactItems = [
-    { label: "Email",    icon: <MdEmail />,    display: copied ? "✓ Copiado!" : "cloudcoders.c2@gmail.com", action: handleCopy },
+    { label: "Email",    icon: <MdEmail />,    display: copied ? "✓ Copiado!" : "kodex.crh@proton.me", action: handleCopy },
     { label: "LinkedIn", icon: <FaLinkedin />, display: "crishtian rodriguez herrera" },
     { label: "GitHub",   icon: <FaGithub />,   display: "@cloudcoders-C2" },
   ];

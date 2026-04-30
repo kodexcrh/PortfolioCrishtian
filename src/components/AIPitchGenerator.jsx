@@ -49,14 +49,13 @@ export default function AIPitchGenerator({ dark, T }) {
     setError("");
 
     const prompt = `Eres el portfolio web inteligente de un profesional. Con los datos reales del dueño, genera un pitch de presentación personalizado en español para quien visita con este rol: "${activeRole}".
-
 Datos del profesional:
 ${MY_INFO}
 
 Tono: ${selectedTone}.
 
 Reglas:
-- Máximo 4 oraciones fluidas.
+-  MÁXIMO 3 oraciones cortas e impactantes. Sin excepciones..
 - Habla en primera persona, como si el portfolio cobrara vida.
 - Destaca exactamente lo más relevante para ese rol específico.
 - Termina con una llamada a la acción concreta y directa.
@@ -74,8 +73,16 @@ Reglas:
           },
           body: JSON.stringify({
             model: "llama-3.3-70b-versatile",
-            messages: [{ role: "user", content: prompt }],
-            max_tokens: 300,
+            messages: [
+              {
+                role: "system",
+                content:
+                  "Eres el portfolio web de Crishtian. Responde SOLO en español, máximo 3 oraciones cortas e impactantes, sin markdown, sin asteriscos.",
+              },
+              { role: "user", content: prompt },
+            ],
+
+            max_tokens: 150,
             temperature: 0.85,
           }),
         },

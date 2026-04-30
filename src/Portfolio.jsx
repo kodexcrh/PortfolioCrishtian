@@ -22,6 +22,7 @@ import Proyectos from "./components/Proyectos";
 import Stack from "./components/Stack";
 import Precios from "./components/Precios";
 import Testimonials from "./components/Testimonials";
+import AIPitchGenerator from "./components/AIPitchGenerator";
 import Contacto from "./components/Contacto";
 import SectionDivider from "./components/SectionDivider";
 import DotGridBackground from "./components/DotGridBackground";
@@ -52,15 +53,17 @@ export default function Portfolio() {
   }, [dark]);
 
   const T = {
-    bg:        dark ? "#07070f"                                        : "#f7f4ff",
-    bgCard:    dark ? "linear-gradient(135deg,#0f0f1e,#12121f)"       : "linear-gradient(135deg,#ffffff,#faf5ff)",
-    bgCard2:   dark ? "#0f0f1e"                                        : "#ffffff",
-    text:      dark ? "#e8e8f0"                                        : "#1a0033",
-    textMid:   dark ? "#8888a8"                                        : "#5a4070",
-    textSub:   dark ? "#66668a"                                        : "#7a5a99",
-    textFaint: dark ? "#44445e"                                        : "#b8a0cc",
-    navBg:     dark ? "rgba(7,7,15,0.94)"                             : "rgba(247,244,255,0.94)",
-    mMenuBg:   dark ? "rgba(7,7,15,0.97)"                             : "rgba(247,244,255,0.97)",
+    bg: dark ? "#07070f" : "#f7f4ff",
+    bgCard: dark
+      ? "linear-gradient(135deg,#0f0f1e,#12121f)"
+      : "linear-gradient(135deg,#ffffff,#faf5ff)",
+    bgCard2: dark ? "#0f0f1e" : "#ffffff",
+    text: dark ? "#e8e8f0" : "#1a0033",
+    textMid: dark ? "#8888a8" : "#5a4070",
+    textSub: dark ? "#66668a" : "#7a5a99",
+    textFaint: dark ? "#44445e" : "#b8a0cc",
+    navBg: dark ? "rgba(7,7,15,0.94)" : "rgba(247,244,255,0.94)",
+    mMenuBg: dark ? "rgba(7,7,15,0.97)" : "rgba(247,244,255,0.97)",
   };
 
   const toggleTheme = () => {
@@ -70,14 +73,16 @@ export default function Portfolio() {
   };
 
   return (
-    <div style={{
-      fontFamily: "'Syne',sans-serif",
-      background: T.bg,
-      color: T.text,
-      minHeight: "100vh",
-      overflowX: "hidden",
-      transition: "background .4s, color .4s",
-    }}>
+    <div
+      style={{
+        fontFamily: "'Syne',sans-serif",
+        background: T.bg,
+        color: T.text,
+        minHeight: "100vh",
+        overflowX: "hidden",
+        transition: "background .4s, color .4s",
+      }}
+    >
       <GlobalStyles />
 
       {/* Splash screen */}
@@ -90,14 +95,16 @@ export default function Portfolio() {
 
       {/* Flash de transición de tema */}
       {themeAnim && (
-        <div className="flash" style={{ background: dark ? "#7C3AED" : "#fff" }} />
+        <div
+          className="flash"
+          style={{ background: dark ? "#7C3AED" : "#fff" }}
+        />
       )}
 
       <BackgroundOrbs dark={dark} />
       <Navbar dark={dark} toggleTheme={toggleTheme} T={T} />
 
       <div style={{ position: "relative", zIndex: 1 }}>
-
         {/* Hero sin dot grid para no chocar con el hero visual */}
         <SectionWrapper dark={dark} intensity={0.9}>
           <Hero dark={dark} T={T} />
@@ -141,10 +148,15 @@ export default function Portfolio() {
 
         <SectionDivider dark={dark} />
 
+        <SectionWrapper dark={dark} intensity={0.8}>
+          <AIPitchGenerator dark={dark} T={T} />
+        </SectionWrapper>
+
+        <SectionDivider dark={dark} />
+
         <SectionWrapper dark={dark} intensity={0.9}>
           <Contacto dark={dark} T={T} />
         </SectionWrapper>
-
       </div>
 
       <Footer T={T} dark={dark} />

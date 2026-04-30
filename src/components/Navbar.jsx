@@ -9,7 +9,16 @@ import LogoNavbar from "../assets/KODEX.png";
 // ── Icono descarga / check ─────────────────────────────────────
 function DownloadIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
       <polyline points="7 10 12 15 17 10" />
       <line x1="12" y1="15" x2="12" y2="3" />
@@ -19,21 +28,31 @@ function DownloadIcon() {
 
 function CheckIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A8EB12" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#A8EB12"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
 }
 
 const SECTION_MAP = {
-  "Inicio":      "inicio",
-  "Sobre mí":    "sobre-mi",
-  "Servicios":   "servicios",
-  "Proyectos":   "proyectos",
-  "Stack":       "stack",
-  "Precios":     "precios",
-  "Testimonios": "testimonios",
-  "Contacto":    "contacto",
+  Inicio: "inicio",
+  "Sobre mí": "sobre-mi",
+  Servicios: "servicios",
+  Proyectos: "proyectos",
+  Stack: "stack",
+  Precios: "precios",
+  Testimonios: "testimonios",
+  "AI Pitch": "ai-pitch",
+  Contacto: "contacto",
 };
 
 function useActiveSection() {
@@ -50,7 +69,7 @@ function useActiveSection() {
         ([entry]) => {
           if (entry.isIntersecting) setActive(label);
         },
-        { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
+        { rootMargin: "-30% 0px -60% 0px", threshold: 0 },
       );
 
       observer.observe(el);
@@ -91,21 +110,28 @@ export default function Navbar({ dark, toggleTheme, T }) {
     <nav
       className={styles.nav}
       style={{
-        background:     scrolled ? T.navBg      : "transparent",
+        background: scrolled ? T.navBg : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom:   scrolled ? "1px solid #7C3AED18" : "none",
+        borderBottom: scrolled ? "1px solid #7C3AED18" : "none",
       }}
     >
       <div className={styles.navInner}>
-
         {/* ── Logo ── */}
         <div
-          style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", flexShrink: 0 }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+            flexShrink: 0,
+          }}
           onClick={() => scrollToSection("Inicio")}
         >
-          <img src={LogoNavbar} alt="Kodex" style={{ height: "34px", width: "auto" }} />
-
-          
+          <img
+            src={LogoNavbar}
+            alt="Kodex"
+            style={{ height: "34px", width: "auto" }}
+          />
         </div>
 
         {/* ── Desktop nav ── */}
@@ -118,8 +144,14 @@ export default function Navbar({ dark, toggleTheme, T }) {
                   className={styles.navLink}
                   style={{ color: isActive ? "#FF3E81" : T.textMid }}
                   onClick={() => scrollToSection(l)}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FF3E81")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? "#FF3E81" : T.textMid)}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#FF3E81")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = isActive
+                      ? "#FF3E81"
+                      : T.textMid)
+                  }
                 >
                   {l}
                 </span>
@@ -127,7 +159,7 @@ export default function Navbar({ dark, toggleTheme, T }) {
                   className={styles.activeBar}
                   style={{
                     transform: isActive ? "scaleX(1)" : "scaleX(0)",
-                    opacity:   isActive ? 1 : 0,
+                    opacity: isActive ? 1 : 0,
                   }}
                 />
               </div>
@@ -137,7 +169,6 @@ export default function Navbar({ dark, toggleTheme, T }) {
 
         {/* ── Theme toggle + hamburger ── */}
         <div className={styles.controls}>
-
           {/* Botón descargar CV */}
           <a
             href="/kodex-cv.pdf"
@@ -152,17 +183,43 @@ export default function Navbar({ dark, toggleTheme, T }) {
             </span>
           </a>
 
-          <button className="t-btn" onClick={toggleTheme} aria-label="Cambiar tema">
-            <div className="t-track" style={{ background: dark ? "#2d1a4a" : "#c46cff" }} />
-            <div className="t-thumb" style={{ left: dark ? 4 : 28, background: dark ? "#1a0a2e" : "#fff" }}>
-              <div className={`i-wrap ${dark ? "off" : "on"}`} style={{ color: "#f59e0b" }}><SunIcon /></div>
-              <div className={`i-wrap ${dark ? "on" : "off"}`} style={{ color: "#c4b5fd" }}><MoonIcon /></div>
+          <button
+            className="t-btn"
+            onClick={toggleTheme}
+            aria-label="Cambiar tema"
+          >
+            <div
+              className="t-track"
+              style={{ background: dark ? "#2d1a4a" : "#c46cff" }}
+            />
+            <div
+              className="t-thumb"
+              style={{
+                left: dark ? 4 : 28,
+                background: dark ? "#1a0a2e" : "#fff",
+              }}
+            >
+              <div
+                className={`i-wrap ${dark ? "off" : "on"}`}
+                style={{ color: "#f59e0b" }}
+              >
+                <SunIcon />
+              </div>
+              <div
+                className={`i-wrap ${dark ? "on" : "off"}`}
+                style={{ color: "#c4b5fd" }}
+              >
+                <MoonIcon />
+              </div>
             </div>
           </button>
 
           <div
             className={`hnav ${menuOpen ? "open" : ""}`}
-            onClick={(e) => { e.stopPropagation(); setMenuOpen((v) => !v); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen((v) => !v);
+            }}
           >
             <span style={{ background: menuOpen ? "#FF3E81" : T.text }} />
             <span style={{ background: menuOpen ? "#FF3E81" : T.text }} />
@@ -192,7 +249,10 @@ export default function Navbar({ dark, toggleTheme, T }) {
                 className="mitem"
                 style={{
                   color: active === l ? "#FF3E81" : T.text,
-                  borderLeft: active === l ? "3px solid #FF3E81" : "3px solid transparent",
+                  borderLeft:
+                    active === l
+                      ? "3px solid #FF3E81"
+                      : "3px solid transparent",
                   paddingLeft: 12,
                 }}
                 onClick={() => {

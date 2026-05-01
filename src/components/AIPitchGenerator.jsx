@@ -48,7 +48,7 @@ export default function AIPitchGenerator({ dark, T }) {
     setResult("");
     setError("");
 
-    const prompt = `Eres el portfolio web inteligente de un profesional. Con los datos reales del dueño, genera un pitch de presentación personalizado en español para quien visita con este rol: "${activeRole}".
+    const prompt = `Con mis datos reales, genera un pitch como si YO mismo estuviera hablando — natural, directo, con personalidad. Para quien visita con este rol: "${activeRole}".
 Datos del profesional:
 ${MY_INFO}
 
@@ -77,7 +77,7 @@ Reglas:
               {
                 role: "system",
                 content:
-                  "Eres el portfolio web de Crishtian. Responde SOLO en español, máximo 3 oraciones cortas e impactantes, sin markdown, sin asteriscos.",
+                  "Eres el portfolio web de Crishtian, pero hablas como si fueras él mismo — con personalidad, carisma y naturalidad. No suenas como un bot ni como un CV. Hablas en primera persona, en español, con energía real. Máximo 3 oraciones cortas e impactantes. Sin markdown, sin asteriscos, sin listas.",
               },
               { role: "user", content: prompt },
             ],

@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "inicio": "首页",
+    "sobreMi": "关于我",
+    "servicios": "服务",
+    "proyectos": "项目",
+    "stack": "技术栈",
+    "precios": "价格",
+    "testimonios": "评价",
+    "aiPitch": "AI 简介",
+    "contacto": "联系",
+    "downloadCV": "下载简历",
+    "changeLang": "切换语言"
+  },
+  "hero": {
+    "greeting": "你好，我是 Crishtian",
+    "available": "接受项目合作",
+    "roles": [
+      "征服用户的 React JS 界面",
+      "驱动决策的 Power BI 仪表板",
+      "解放时间的 n8n 自动化",
+      "让业务更智能的 AI"
+    ],
+    "sub": "我将复杂想法转化为吸引用户的界面，让数据驱动决策。",
+    "cta1": "查看项目",
+    "cta2": "联系我"
+  },
+  "about": {
+    "tag": "关于我",
+    "title": "用数据、代码与 IA 构建真正有效的解决方案",
+    "p1": "我是 Crishtian，一名来自秘鲁的前端开发者和自动化专家。我构建 React JS 界面、Power BI 分析仪表板、n8n 智能工作流以及 Claude AI 解决方案，为真实企业节省真实时间。",
+    "p2": "我不仅交付代码 — 我交付能做决策的系统。",
+    "yearsExp": "3+",
+    "yearsLabel": "年经验",
+    "projectsCount": "20+",
+    "projectsLabel": "已交付项目",
+    "commitment": "专注度",
+    "btnStudies": "教育背景",
+    "btnExp": "工作经验"
+  },
+  "services": {
+    "tag": "服务",
+    "title": "我能为",
+    "titleSpan": "您做什么",
+    "sub": "三项专业协同工作，用真实技术助力您的业务增长。",
+    "items": [
+      {
+        "title": "前端开发",
+        "desc": "使用 React JS 构建现代响应式界面。可复用组件、优化性能和卓越用户体验。",
+        "tags": [
+          "React",
+          "Tailwind",
+          "JavaScript"
+        ]
+      },
+      {
+        "title": "数据分析",
+        "desc": "Power BI 交互式仪表板与 Claude AI 增强智能。将数据转化为决策。",
+        "tags": [
+          "Power BI",
+          "Claude AI",
+          "DAX"
+        ]
+      },
+      {
+        "title": "自动化",
+        "desc": "使用 n8n 构建智能工作流。连接应用、消除重复任务、提升生产力。",
+        "tags": [
+          "n8n",
+          "API REST",
+          "Webhooks"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "tag": "项目",
+    "title": "精选",
+    "titleSpan": "作品",
+    "sub": "真实项目，展示我的技术和分析能力。",
+    "count": "个项目 →",
+    "cta": "查看项目 →",
+    "statusLive": "已上线",
+    "statusDev": "开发中",
+    "statusPrivate": "私有",
+    "acquire": "购买系统",
+    "acquireMsg": "您好，我有兴趣购买该系统"
+  },
+  "stack": {
+    "tag": "技能",
+    "title": "我的",
+    "titleSpan": "技术栈",
+    "sub": "我每天使用的工具和技术。",
+    "levels": {
+      "Avanzado": "高级",
+      "Intermedio": "中级",
+      "Básico": "基础"
+    }
+  },
+  "pricing": {
+    "tag": "价格",
+    "title": "透明",
+    "titleSpan": "报价",
+    "sub": "无隐藏费用。选择最适合您项目的方案。",
+    "hire": "立即合作 →",
+    "hireAuto": "立即合作",
+    "note": "* 所有价格以美元计。支持转账或 PayPal 付款。",
+    "automation": {
+      "title": "n8n 自动化"
+    }
+  },
+  "testimonials": {
+    "tag": "客户评价",
+    "title": "客户",
+    "titleSpan": "怎么说",
+    "sub": "真实项目的真实成果。"
+  },
+  "pitch": {
+    "tag": "✦ AI 驱动",
+    "title": "我的作品集",
+    "titleSpan": "与您对话",
+    "sub": "告诉我您是谁，AI 将生成一段个性化的介绍，展示我如何帮助您。",
+    "step1": "01 — 您是谁？",
+    "step2": "02 — 语气风格",
+    "step3": "03 — 您的行业（可选）",
+    "customPlaceholder": "或输入您自己的角色…",
+    "industryPlaceholder": "例如：SaaS、零售、教育、医疗…",
+    "btnGenerate": "✦ 生成我的简介",
+    "btnGenerating": "生成中",
+    "btnCopy": "复制文本",
+    "btnCopied": "✓ 已复制",
+    "btnWhatsApp": "WhatsApp 联系",
+    "btnRegenerate": "重新生成",
+    "targetLabel": "面向",
+    "errorMsg": "无法连接 AI。请检查 .env 中的 API key",
+    "roles": [
+      {
+        "label": "技术招聘官",
+        "accent": "#7C3AED"
+      },
+      {
+        "label": "创始人/初创",
+        "accent": "#FF3E81"
+      },
+      {
+        "label": "潜在客户",
+        "accent": "#A8EB12"
+      },
+      {
+        "label": "同行开发者",
+        "accent": "#01D4E8"
+      },
+      {
+        "label": "投资人",
+        "accent": "#FEC303"
+      },
+      {
+        "label": "创意合作者",
+        "accent": "#EA4B71"
+      }
+    ],
+    "tones": [
+      {
+        "label": "专业",
+        "value": "专业且直接，如商务会议"
+      },
+      {
+        "label": "热情",
+        "value": "充满活力和正能量"
+      },
+      {
+        "label": "亲切",
+        "value": "温暖自然，如可信赖的朋友"
+      },
+      {
+        "label": "幽默",
+        "value": "巧妙而富有智慧的幽默"
+      }
+    ]
+  },
+  "contact": {
+    "tag": "联系",
+    "title": "我们一起",
+    "titleSpan": "合作？",
+    "sub": "欢迎自由职业项目、合作和有趣的机会。",
+    "sub2": "24小时内回复",
+    "socialLabel": "社交网络",
+    "formTitle": "发送消息给我",
+    "labelName": "姓名",
+    "labelEmail": "邮箱",
+    "labelPhone": "电话 / WhatsApp",
+    "labelService": "服务类型",
+    "labelMsg": "留言",
+    "namePlaceholder": "您的全名",
+    "emailPlaceholder": "您的邮箱",
+    "messagePlaceholder": "告诉我您的项目、需求和时间表…",
+    "selectService": "选择服务",
+    "chars": "字符",
+    "btnSend": "发送消息",
+    "btnSending": "发送中…",
+    "btnSent": "消息已发送！",
+    "successMsg": "感谢！您将在24小时内收到回复。",
+    "errorMsg": "发送失败。请重试或直接通过 WhatsApp 联系。",
+    "rateLimit": "尝试次数过多，请稍后再试。",
+    "location": "秘鲁 华拉斯 · 远程工作"
+  },
+  "footer": {
+    "tagline": "网页开发 · 数据 · 自动化",
+    "desc": "为企业和创业者提供定制数字解决方案。干净的代码，难忘的设计，真实的成果。",
+    "nav": "导航",
+    "more": "更多",
+    "cta": "联系我",
+    "available": "接受项目合作",
+    "rights": "版权所有。",
+    "madeWith": "用"
+  }
+}

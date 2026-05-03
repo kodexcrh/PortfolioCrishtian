@@ -131,19 +131,52 @@
 .resultText {
   font-family: 'Syne', sans-serif;
   font-size: 15px;
-  line-height: 1.75;
-  margin: 0 0 12px;
+  line-height: 1.8;
+  margin: 0 0 16px;
+  min-height: 2em;
 }
 
-.copyBtn {
-  background: none;
-  border: none;
+/* ── Cursor typewriter ────────────────────────────────────── */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  color: #7C3AED;
+  font-weight: 100;
+  animation: blink-cursor 0.7s steps(1) infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Botones post-generación ──────────────────────────────── */
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
   font-family: 'Space Mono', monospace;
   font-size: 11px;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  padding: 0;
-  transition: color 0.2s;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.actionBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 /* ── Loading dots ─────────────────────────────────────────── */
@@ -163,5 +196,14 @@
 @media (max-width: 500px) {
   .roleGrid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .actionRow {
+    flex-direction: column;
+  }
+
+  .actionBtn {
+    width: 100%;
+    justify-content: center;
   }
 }

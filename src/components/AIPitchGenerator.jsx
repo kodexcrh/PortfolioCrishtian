@@ -1,40 +1,99 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  FaRobot,
+  FaBriefcase,
+  FaRocket,
+  FaHandshake,
+  FaCode,
+  FaChartLine,
+  FaPalette,
+  FaWhatsapp,
+  FaRedo,
+} from "react-icons/fa";
+import { MdContentCopy, MdCheck, MdFlashOn } from "react-icons/md";
+import { useLang } from "../context/LangContext";
 import styles from "./AIPitchGenerator.module.css";
 
-// ── Datos del portfolio (personaliza estos datos) ──────────────
+// ── Datos del portfolio ────────────────────────────────────────
 const MY_INFO = `
-Nombre: Crishtian
-Rol: Developer & Data Analyst
-Skills principales: React JS, Power BI, n8n (automatización), Claude AI, JavaScript, Tailwind CSS, PostgreSQL, Figma
-Experiencia: 3+ años, 20+ proyectos
-Servicios: Desarrollo Frontend con React, Análisis de datos con Power BI + IA, Automatización de flujos con n8n
-LinkedIn: https://www.linkedin.com/in/crishtian-rodriguez-herrera-76b5223b9/
-GitHub: https://github.com/cloudcoders-C2
-WhatsApp: +51960959529
+Nombre: Crishtian Rodriguez Herrera
+Rol profesional: Frontend Developer, Data Analyst & Automation Specialist
+Stack principal: React JS, Power BI, n8n, Claude AI, JavaScript, PostgreSQL, Supabase, Node.js
+Experiencia: 3+ años, 20+ proyectos entregados en producción
+Ubicación: Huaraz, Perú — trabajo 100% remoto
+Marca: KODEX — soluciones digitales con propósito
+Portfolio: portfolio-crishtian.vercel.app
+WhatsApp: +51 960 959 529
+
+Proyectos reales destacados:
+— SisEducacion: sistema ERP escolar completo (React+Vite, Node.js, PostgreSQL, 16 módulos: matrículas, pensiones, asistencia por QR, facturación, preuniversitaria con ranking automático)
+— RestaurantePro: ERP de restaurante full-stack con 46 módulos (delivery, facturación electrónica, RRHH, pasarela de pago Culqi/Yape/Plin)
+— Bot de gastos: agente IA en Telegram que categoriza gastos automáticamente y los registra en Google Sheets + Supabase vía n8n
+— Dashboard Analytics: Power BI con DAX avanzado e integración Claude AI para análisis predictivo
+
+Servicios que ofrezco:
+1. Desarrollo Frontend React JS — interfaces que convierten, escalan y se ven brutales
+2. Análisis de Datos con Power BI + IA — dashboards que toman decisiones solas
+3. Automatización n8n — flujos que trabajan mientras duermes
+
+Diferenciador clave: No solo codifico. Integro IA para que los sistemas piensen, no solo funcionen.
 `;
 
-const ROLES = [
-  { label: "Reclutador tech", emoji: "🎯", accent: "#7C3AED" },
-  { label: "Founder / Startup", emoji: "🚀", accent: "#FF3E81" },
-  { label: "Cliente potencial", emoji: "💼", accent: "#A8EB12" },
-  { label: "Colega developer", emoji: "👨‍💻", accent: "#01D4E8" },
-  { label: "Inversor", emoji: "📈", accent: "#FEC303" },
-  { label: "Colaborador creativo", emoji: "🎨", accent: "#EA4B71" },
-];
+// ── Mapeo emojis → react-icons ─────────────────────────────────
+const ROLE_ICONS = {
+  0: FaRobot,
+  1: FaRocket,
+  2: FaBriefcase,
+  3: FaCode,
+  4: FaChartLine,
+  5: FaPalette,
+};
 
-const TONES = [
-  { label: "Profesional", value: "profesional y directo" },
-  { label: "Entusiasta", value: "entusiasta y enérgico" },
-  { label: "Cercano", value: "cercano y humano" },
-  { label: "Con humor", value: "ingenioso con humor sutil" },
-];
+// ── Typewriter hook ────────────────────────────────────────────
+function useTypewriter(text, speed = 18) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+  const indexRef = useRef(0);
+  const timerRef = useRef(null);
 
+  useEffect(() => {
+    if (!text) {
+      setDisplayed("");
+      setDone(false);
+      return;
+    }
+    indexRef.current = 0;
+    setDisplayed("");
+    setDone(false);
+
+    timerRef.current = setInterval(() => {
+      indexRef.current += 1;
+      setDisplayed(text.slice(0, indexRef.current));
+      if (indexRef.current >= text.length) {
+        clearInterval(timerRef.current);
+        setDone(true);
+      }
+    }, speed);
+
+    return () => clearInterval(timerRef.current);
+  }, [text, speed]);
+
+  return { displayed, done };
+}
+
+// ── Componente principal ───────────────────────────────────────
 export default function AIPitchGenerator({ dark, T }) {
+  const { t } = useLang();
+
+  const ROLES = t("pitch.roles");
+  const TONES = t("pitch.tones");
+
   const [selectedRole, setSelectedRole] = useState(null);
   const [customRole, setCustomRole] = useState("");
   const [selectedTone, setSelectedTone] = useState(TONES[0].value);
-  const [result, setResult] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [rawResult, setRawResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
@@ -42,76 +101,94 @@ export default function AIPitchGenerator({ dark, T }) {
   const activeRole = selectedRole?.label || customRole.trim();
   const activeAccent = selectedRole?.accent || "#7C3AED";
 
+  const { displayed, done } = useTypewriter(rawResult, 16);
+
   async function generate() {
     if (!activeRole) return;
     setLoading(true);
-    setResult("");
+    setRawResult("");
     setError("");
 
-    const prompt = `Con mis datos reales, genera un pitch como si YO mismo estuviera hablando — natural, directo, con personalidad. Para quien visita con este rol: "${activeRole}".
-Datos del profesional:
-${MY_INFO}
+    const industryLine = industry.trim()
+      ? `\nSector/Industria del visitante: ${industry.trim()}`
+      : "";
 
-Tono: ${selectedTone}.
+    const systemPrompt = `Eres Crishtian Rodriguez Herrera. Hablas en primera persona, directamente a quien visita tu portfolio ahora mismo.
 
-Reglas:
--  MÁXIMO 3 oraciones cortas e impactantes. Sin excepciones..
-- Habla en primera persona, como si el portfolio cobrara vida.
-- Destaca exactamente lo más relevante para ese rol específico.
-- Termina con una llamada a la acción concreta y directa.
-- Solo texto plano, sin asteriscos ni markdown.
-- Sé específico y memorable. Cero frases genéricas.`;
+REGLAS ABSOLUTAS:
+- Máximo 4 oraciones naturales. Sin excepciones.
+- Primera persona siempre. Nunca "Crishtian hace" — siempre "yo hago".
+- Menciona UN proyecto real o resultado concreto tuyo, no genérico.
+- Termina con una invitación directa y específica a contactar.
+- CERO asteriscos, CERO markdown, CERO listas, CERO subtítulos.
+- Tono: ${selectedTone}.
+- Suenas como una persona real hablando, no como un CV ni un chatbot.
+- Si el visitante es reclutador: menciona impacto medible. Si es founder: menciona velocidad y ROI. Si es cliente: menciona el problema que resuelves. Si es developer: habla de arquitectura y código limpio.
+- Incluye al menos una tecnología concreta relevante para ese perfil.`;
+
+    const userPrompt = `Genera el pitch para: "${activeRole}"${industryLine}
+
+Mis datos: ${MY_INFO}
+
+Habla directo a esta persona. Hazlo memorable y humano.`;
 
     try {
-      const res = await fetch(
-        "https://api.groq.com/openai/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "llama-3.3-70b-versatile",
-            messages: [
-              {
-                role: "system",
-                content:
-                  "Eres el portfolio web de Crishtian, pero hablas como si fueras él mismo — con personalidad, carisma y naturalidad. No suenas como un bot ni como un CV. Hablas en primera persona, en español, con energía real. Máximo 3 oraciones cortas e impactantes. Sin markdown, sin asteriscos, sin listas.",
-              },
-              { role: "user", content: prompt },
-            ],
-
-            max_tokens: 150,
-            temperature: 0.85,
-          }),
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
         },
-      );
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt },
+          ],
+          max_tokens: 180,
+          temperature: 0.9,
+          top_p: 0.95,
+          frequency_penalty: 0.3,
+          presence_penalty: 0.2,
+        }),
+      });
 
       if (!res.ok) throw new Error(`Error ${res.status}`);
       const data = await res.json();
-      setResult(
-        data.choices?.[0]?.message?.content?.trim() ||
-          "No se pudo generar el pitch.",
+      setRawResult(
+        data.choices?.[0]?.message?.content?.trim() || "No se pudo generar el pitch."
       );
-    } catch (e) {
-      setError("No se pudo conectar con la IA. Verifica tu API key en .env");
+    } catch {
+      setError(t("pitch.errorMsg"));
     }
 
     setLoading(false);
   }
 
   function copyText() {
-    navigator.clipboard.writeText(result).then(() => {
+    navigator.clipboard.writeText(rawResult).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
+      setTimeout(() => setCopied(false), 1800);
     });
   }
+
+  function openWhatsApp() {
+    const text = encodeURIComponent(
+      `Hola Crishtian, vi tu portfolio y me interesa tu trabajo. ${rawResult}`
+    );
+    window.open(`https://wa.me/51960959529?text=${text}`, "_blank");
+  }
+
+  // Sync tones al cambiar idioma
+  useEffect(() => {
+    setSelectedTone(TONES[0].value);
+    setSelectedRole(null);
+  }, [t]);
 
   return (
     <section id="ai-pitch" className={styles.section}>
       <div className={`c ${styles.inner}`}>
-        {/* Header */}
+        {/* ── Header ── */}
         <motion.div
           className={styles.header}
           initial={{ opacity: 0, y: 24 }}
@@ -119,20 +196,23 @@ Reglas:
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="stag">✦ Impulsado por IA</span>
+          <span className="stag">
+            <MdFlashOn style={{ verticalAlign: "middle", marginRight: 4 }} />
+            {t("pitch.tag")}
+          </span>
           <h2 className="htitle" style={{ marginTop: 12 }}>
-            Mi portfolio <span className="glow-text">te habla</span>
+            {t("pitch.title")}{" "}
+            <span className="glow-text">{t("pitch.titleSpan")}</span>
           </h2>
           <p
             className="hsub"
             style={{ color: T.textMid, maxWidth: 520, margin: "0 auto" }}
           >
-            Dime quién eres y la IA genera un pitch personalizado de cómo puedo
-            ayudarte.
+            {t("pitch.sub")}
           </p>
         </motion.div>
 
-        {/* Card principal */}
+        {/* ── Card ── */}
         <motion.div
           className={styles.card}
           style={{
@@ -146,42 +226,42 @@ Reglas:
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15 }}
         >
-          {/* Barra top accent */}
           <div className={styles.topBar} />
 
           {/* Paso 1: rol */}
           <div className={styles.step}>
             <p className={styles.stepLabel} style={{ color: T.textSub }}>
-              01 — ¿Quién me visita?
+              {t("pitch.step1")}
             </p>
             <div className={styles.roleGrid}>
-              {ROLES.map((r) => (
-                <button
-                  key={r.label}
-                  className={styles.roleBtn}
-                  style={{
-                    background:
-                      selectedRole?.label === r.label
-                        ? `${r.accent}18`
-                        : dark
-                          ? "#0a0a18"
-                          : "#f5f0ff",
-                    border:
-                      selectedRole?.label === r.label
-                        ? `1.5px solid ${r.accent}99`
-                        : `1px solid ${dark ? "#7C3AED22" : "#7C3AED18"}`,
-                    color:
-                      selectedRole?.label === r.label ? r.accent : T.textMid,
-                  }}
-                  onClick={() => {
-                    setSelectedRole(r);
-                    setCustomRole("");
-                  }}
-                >
-                  <span style={{ fontSize: 16 }}>{r.emoji}</span>
-                  {r.label}
-                </button>
-              ))}
+              {ROLES.map((r, i) => {
+                const Icon = ROLE_ICONS[i] || FaBriefcase;
+                return (
+                  <button
+                    key={r.label}
+                    className={styles.roleBtn}
+                    style={{
+                      background:
+                        selectedRole?.label === r.label
+                          ? `${r.accent}18`
+                          : dark ? "#0a0a18" : "#f5f0ff",
+                      border:
+                        selectedRole?.label === r.label
+                          ? `1.5px solid ${r.accent}99`
+                          : `1px solid ${dark ? "#7C3AED22" : "#7C3AED18"}`,
+                      color:
+                        selectedRole?.label === r.label ? r.accent : T.textMid,
+                    }}
+                    onClick={() => {
+                      setSelectedRole(r);
+                      setCustomRole("");
+                    }}
+                  >
+                    <Icon size={14} />
+                    {r.label}
+                  </button>
+                );
+              })}
             </div>
 
             <input
@@ -194,7 +274,7 @@ Reglas:
                   : `1px solid ${dark ? "#7C3AED22" : "#7C3AED18"}`,
                 color: T.text,
               }}
-              placeholder="O escribe tu propio rol…"
+              placeholder={t("pitch.customPlaceholder")}
               value={customRole}
               onChange={(e) => {
                 setCustomRole(e.target.value);
@@ -206,32 +286,51 @@ Reglas:
           {/* Paso 2: tono */}
           <div className={styles.step}>
             <p className={styles.stepLabel} style={{ color: T.textSub }}>
-              02 — Tono del pitch
+              {t("pitch.step2")}
             </p>
             <div className={styles.toneRow}>
-              {TONES.map((t) => (
+              {TONES.map((tone) => (
                 <button
-                  key={t.value}
+                  key={tone.value}
                   className={styles.toneChip}
                   style={{
                     background:
-                      selectedTone === t.value
+                      selectedTone === tone.value
                         ? "#7C3AED18"
-                        : dark
-                          ? "#0a0a18"
-                          : "#f5f0ff",
+                        : dark ? "#0a0a18" : "#f5f0ff",
                     border:
-                      selectedTone === t.value
+                      selectedTone === tone.value
                         ? "1.5px solid #7C3AED99"
                         : `1px solid ${dark ? "#7C3AED22" : "#7C3AED18"}`,
-                    color: selectedTone === t.value ? "#7C3AED" : T.textMid,
+                    color: selectedTone === tone.value ? "#7C3AED" : T.textMid,
                   }}
-                  onClick={() => setSelectedTone(t.value)}
+                  onClick={() => setSelectedTone(tone.value)}
                 >
-                  {t.label}
+                  {tone.label}
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Paso 3: industria (NUEVO) */}
+          <div className={styles.step}>
+            <p className={styles.stepLabel} style={{ color: T.textSub }}>
+              {t("pitch.step3")}
+            </p>
+            <input
+              type="text"
+              className={styles.customInput}
+              style={{
+                background: dark ? "#0a0a18" : "#f5f0ff",
+                border: industry
+                  ? "1.5px solid #A8EB1299"
+                  : `1px solid ${dark ? "#7C3AED22" : "#7C3AED18"}`,
+                color: T.text,
+              }}
+              placeholder={t("pitch.industryPlaceholder")}
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+            />
           </div>
 
           {/* Botón generar */}
@@ -242,6 +341,10 @@ Reglas:
               marginTop: 8,
               opacity: activeRole ? 1 : 0.45,
               cursor: activeRole ? "pointer" : "not-allowed",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
             }}
             onClick={generate}
             disabled={!activeRole || loading}
@@ -249,18 +352,22 @@ Reglas:
           >
             {loading ? (
               <span className={styles.loadingDots}>
-                Generando pitch<span>.</span>
+                {t("pitch.btnGenerating")}
+                <span>.</span>
                 <span>.</span>
                 <span>.</span>
               </span>
             ) : (
-              "✦ Generar mi pitch"
+              <>
+                <MdFlashOn size={15} />
+                {t("pitch.btnGenerate")}
+              </>
             )}
           </motion.button>
 
           {/* Resultado */}
           <AnimatePresence>
-            {(result || error) && (
+            {(rawResult || error) && (
               <motion.div
                 className={styles.resultWrap}
                 style={{
@@ -285,6 +392,7 @@ Reglas:
                   </p>
                 ) : (
                   <>
+                    {/* Badge */}
                     <div
                       className={styles.resultBadge}
                       style={{
@@ -292,18 +400,73 @@ Reglas:
                         color: activeAccent,
                       }}
                     >
-                      Para {activeRole.toLowerCase()}
+                      {t("pitch.targetLabel")}{" "}
+                      {activeRole.toLowerCase()}
                     </div>
+
+                    {/* Texto con typewriter */}
                     <p className={styles.resultText} style={{ color: T.text }}>
-                      {result}
+                      {displayed}
+                      {!done && (
+                        <span className={styles.cursor}>|</span>
+                      )}
                     </p>
-                    <button
-                      className={styles.copyBtn}
-                      style={{ color: copied ? "#A8EB12" : T.textSub }}
-                      onClick={copyText}
-                    >
-                      {copied ? "✓ Copiado" : "Copiar texto"}
-                    </button>
+
+                    {/* Botones post-generación (aparecen al terminar) */}
+                    {done && (
+                      <motion.div
+                        className={styles.actionRow}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {/* Copiar */}
+                        <button
+                          className={styles.actionBtn}
+                          style={{
+                            color: copied ? "#A8EB12" : T.textSub,
+                            border: `1px solid ${copied ? "#A8EB1244" : dark ? "#7C3AED22" : "#7C3AED18"}`,
+                            background: copied ? "#A8EB1208" : "transparent",
+                          }}
+                          onClick={copyText}
+                        >
+                          {copied ? (
+                            <MdCheck size={13} />
+                          ) : (
+                            <MdContentCopy size={13} />
+                          )}
+                          {copied ? t("pitch.btnCopied") : t("pitch.btnCopy")}
+                        </button>
+
+                        {/* WhatsApp */}
+                        <button
+                          className={styles.actionBtn}
+                          style={{
+                            color: "#25D366",
+                            border: "1px solid #25D36644",
+                            background: "#25D36608",
+                          }}
+                          onClick={openWhatsApp}
+                        >
+                          <FaWhatsapp size={13} />
+                          {t("pitch.btnWhatsApp")}
+                        </button>
+
+                        {/* Regenerar */}
+                        <button
+                          className={styles.actionBtn}
+                          style={{
+                            color: activeAccent,
+                            border: `1px solid ${activeAccent}44`,
+                            background: `${activeAccent}08`,
+                          }}
+                          onClick={generate}
+                        >
+                          <FaRedo size={11} />
+                          {t("pitch.btnRegenerate")}
+                        </button>
+                      </motion.div>
+                    )}
                   </>
                 )}
               </motion.div>

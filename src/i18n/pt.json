@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "inicio": "Início",
+    "sobreMi": "Sobre mim",
+    "servicios": "Serviços",
+    "proyectos": "Projetos",
+    "stack": "Stack",
+    "precios": "Preços",
+    "testimonios": "Depoimentos",
+    "aiPitch": "AI Pitch",
+    "contacto": "Contato",
+    "downloadCV": "Baixar CV",
+    "changeLang": "Mudar idioma"
+  },
+  "hero": {
+    "greeting": "Olá, sou Crishtian",
+    "available": "Disponível para projetos",
+    "roles": [
+      "Interfaces React JS que conquistam",
+      "Dashboards Power BI que decidem",
+      "Automação n8n que libera seu tempo",
+      "IA que torna seu negócio mais inteligente"
+    ],
+    "sub": "Transformo ideias complexas em interfaces que conquistam usuários e dados que impulsionam decisões.",
+    "cta1": "Ver projetos",
+    "cta2": "Vamos conversar"
+  },
+  "about": {
+    "tag": "Sobre mim",
+    "title": "Conecto dados, código e IA em soluções que funcionam",
+    "p1": "Sou Crishtian, desenvolvedor frontend e especialista em automação baseado no Peru. Construo interfaces React JS, dashboards analíticos com Power BI, fluxos inteligentes com n8n e soluções de IA com Claude AI que economizam tempo real para empresas reais.",
+    "p2": "Não entrego apenas código — entrego sistemas que tomam decisões.",
+    "yearsExp": "3+",
+    "yearsLabel": "Anos de experiência",
+    "projectsCount": "20+",
+    "projectsLabel": "Projetos entregues",
+    "commitment": "Comprometimento",
+    "btnStudies": "Formação",
+    "btnExp": "Experiência"
+  },
+  "services": {
+    "tag": "Serviços",
+    "title": "O que posso fazer",
+    "titleSpan": "por você",
+    "sub": "Três especialidades trabalhando juntas para seu negócio crescer com tecnologia real.",
+    "items": [
+      {
+        "title": "Desenvolvimento Frontend",
+        "desc": "Interfaces modernas e reativas com React JS. Componentes reutilizáveis, desempenho otimizado e UX excepcional.",
+        "tags": [
+          "React",
+          "Tailwind",
+          "JavaScript"
+        ]
+      },
+      {
+        "title": "Análise de Dados",
+        "desc": "Dashboards interativos com Power BI e inteligência aumentada com Claude AI. Transforme dados em decisões.",
+        "tags": [
+          "Power BI",
+          "Claude AI",
+          "DAX"
+        ]
+      },
+      {
+        "title": "Automação",
+        "desc": "Fluxos de trabalho inteligentes com n8n. Conecte apps, elimine tarefas repetitivas e aumente sua produtividade.",
+        "tags": [
+          "n8n",
+          "API REST",
+          "Webhooks"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "tag": "Projetos",
+    "title": "Trabalho",
+    "titleSpan": "em destaque",
+    "sub": "Projetos reais que demonstram minhas capacidades técnicas e analíticas.",
+    "count": "projetos →",
+    "cta": "Ver projeto →",
+    "statusLive": "Ao vivo",
+    "statusDev": "Em desenvolvimento",
+    "statusPrivate": "Privado",
+    "acquire": "Adquirir sistema",
+    "acquireMsg": "Olá, tenho interesse em adquirir o sistema"
+  },
+  "stack": {
+    "tag": "Habilidades",
+    "title": "Meu",
+    "titleSpan": "Stack",
+    "sub": "Ferramentas e tecnologias com as quais trabalho diariamente.",
+    "levels": {
+      "Avanzado": "Avançado",
+      "Intermedio": "Intermediário",
+      "Básico": "Básico"
+    }
+  },
+  "pricing": {
+    "tag": "Preços",
+    "title": "Investimento",
+    "titleSpan": "transparente",
+    "sub": "Sem surpresas. Escolha o plano que melhor se adapta ao seu projeto.",
+    "hire": "Contratar →",
+    "hireAuto": "Contratar",
+    "note": "* Todos os preços em USD. Pagamentos via transferência ou PayPal.",
+    "automation": {
+      "title": "Automação n8n"
+    }
+  },
+  "testimonials": {
+    "tag": "Depoimentos",
+    "title": "O que dizem",
+    "titleSpan": "meus clientes",
+    "sub": "Resultados reais de projetos reais."
+  },
+  "pitch": {
+    "tag": "✦ Desenvolvido com IA",
+    "title": "Meu portfólio",
+    "titleSpan": "fala com você",
+    "sub": "Me diga quem você é e a IA gera um pitch personalizado de como posso ajudá-lo.",
+    "step1": "01 — Quem me visita?",
+    "step2": "02 — Tom do pitch",
+    "step3": "03 — Seu setor (opcional)",
+    "customPlaceholder": "Ou escreva seu próprio papel…",
+    "industryPlaceholder": "Ex.: SaaS, varejo, educação, saúde…",
+    "btnGenerate": "✦ Gerar meu pitch",
+    "btnGenerating": "Gerando pitch",
+    "btnCopy": "Copiar texto",
+    "btnCopied": "✓ Copiado",
+    "btnWhatsApp": "Contatar pelo WhatsApp",
+    "btnRegenerate": "Regenerar",
+    "targetLabel": "Para",
+    "errorMsg": "Não foi possível conectar à IA. Verifique sua chave de API no .env",
+    "roles": [
+      {
+        "label": "Recrutador tech",
+        "accent": "#7C3AED"
+      },
+      {
+        "label": "Founder / Startup",
+        "accent": "#FF3E81"
+      },
+      {
+        "label": "Cliente potencial",
+        "accent": "#A8EB12"
+      },
+      {
+        "label": "Colega developer",
+        "accent": "#01D4E8"
+      },
+      {
+        "label": "Investidor",
+        "accent": "#FEC303"
+      },
+      {
+        "label": "Colaborador criativo",
+        "accent": "#EA4B71"
+      }
+    ],
+    "tones": [
+      {
+        "label": "Profissional",
+        "value": "profissional e direto, como em uma reunião de negócios"
+      },
+      {
+        "label": "Entusiasmado",
+        "value": "entusiasmado e enérgico, com energia positiva genuína"
+      },
+      {
+        "label": "Próximo",
+        "value": "próximo e humano, como um amigo de confiança"
+      },
+      {
+        "label": "Com humor",
+        "value": "inteligente com humor sutil e perspicaz"
+      }
+    ]
+  },
+  "contact": {
+    "tag": "Contato",
+    "title": "Vamos trabalhar",
+    "titleSpan": "juntos?",
+    "sub": "Disponível para projetos freelance, colaborações e oportunidades interessantes.",
+    "sub2": "Respondo em menos de 24 horas",
+    "socialLabel": "Redes sociais",
+    "formTitle": "Envie-me uma mensagem",
+    "labelName": "Nome",
+    "labelEmail": "E-mail",
+    "labelPhone": "Telefone / WhatsApp",
+    "labelService": "Tipo de serviço",
+    "labelMsg": "Mensagem",
+    "namePlaceholder": "Seu nome completo",
+    "emailPlaceholder": "voce@email.com",
+    "messagePlaceholder": "Conte-me sobre seu projeto, o que precisa e o prazo...",
+    "selectService": "Selecione um serviço",
+    "chars": "caracteres",
+    "btnSend": "Enviar mensagem",
+    "btnSending": "Enviando…",
+    "btnSent": "Mensagem enviada!",
+    "successMsg": "Obrigado! Você receberá uma resposta em menos de 24 horas.",
+    "errorMsg": "Houve um problema ao enviar. Tente novamente ou escreva pelo WhatsApp.",
+    "rateLimit": "Muitas tentativas. Tente novamente em breve.",
+    "location": "Huaraz, Ancash — Peru · Trabalho remoto"
+  },
+  "footer": {
+    "tagline": "Desenvolvimento web · Dados · Automação",
+    "desc": "Soluções digitais personalizadas para empresas e empreendedores. Código limpo, design memorável, resultados reais.",
+    "nav": "Navegação",
+    "more": "Mais",
+    "cta": "Vamos conversar",
+    "available": "Disponível para projetos",
+    "rights": "Todos os direitos reservados.",
+    "madeWith": "Feito com"
+  }
+}

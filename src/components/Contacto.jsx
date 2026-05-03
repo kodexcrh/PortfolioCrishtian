@@ -2,20 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import DOMPurify from "dompurify";
 import { SOCIAL_LINKS } from "../constants";
+import { useLang } from "../context/LangContext";
 import Reveal from "./Reveal";
 import styles from "./Contacto.module.css";
 import { FaGithub, FaLinkedin, FaBolt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
-// ── EmailJS — variables de entorno (.env) ────────────────────
+// ── EmailJS ────────────────────────────────────────────────────
 const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-// ── Seguridad: Rate Limit ─────────────────────────────────────
+// ── Rate Limit ────────────────────────────────────────────────
 const RATE_LIMIT_KEY    = "cc_contact_attempts";
 const RATE_LIMIT_MAX    = 3;
-const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hora en ms
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000;
 
 function checkRateLimit() {
   try {
@@ -45,16 +46,16 @@ function getRemainingMinutes() {
   }
 }
 
-// ── Seguridad: Sanitización (DOMPurify) ───────────────────────
+// ── Sanitizar ─────────────────────────────────────────────────
 function sanitize(value) {
   return DOMPurify.sanitize(String(value).trim(), {
-    ALLOWED_TAGS:  [],
-    ALLOWED_ATTR:  [],
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
   });
 }
 
-// ─────────────────────────────────────────────────────────────
-const SERVICIOS = [
+// ── Servicios del select ───────────────────────────────────────
+const SERVICIOS_ES = [
   "Desarrollo Frontend (React JS)",
   "Dashboard Power BI",
   "Automatización n8n",
@@ -63,6 +64,7 @@ const SERVICIOS = [
 ];
 
 export default function Contacto({ dark, T }) {
+  const { t } = useLang();
   const formRef   = useRef(null);
   const mountTime = useRef(Date.now());
 
@@ -135,14 +137,12 @@ export default function Contacto({ dark, T }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Capa 1: Honeypot
     if (honeypot.trim() !== "") {
       setStatus("success");
       setTimeout(() => setStatus("idle"), 5000);
       return;
     }
 
-    // Capa 2: Timing check (< 3s = bot)
     const elapsed = (Date.now() - mountTime.current) / 1000;
     if (elapsed < 3) {
       setStatus("bot");
@@ -150,19 +150,16 @@ export default function Contacto({ dark, T }) {
       return;
     }
 
-    // Capa 3: Rate limit
     if (!checkRateLimit()) {
       setStatus("ratelimit");
       return;
     }
 
-    // Validación de campos
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
     setStatus("sending");
 
-    // Capa 4: Sanitizar inputs
     const sanitizedForm = {
       nombre:   sanitize(form.nombre),
       email:    sanitize(form.email),
@@ -172,12 +169,7 @@ export default function Contacto({ dark, T }) {
     };
 
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        sanitizedForm,
-        EMAILJS_PUBLIC_KEY
-      );
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, sanitizedForm, EMAILJS_PUBLIC_KEY);
       setStatus("success");
       setForm({ nombre: "", email: "", telefono: "", servicio: "", mensaje: "" });
       setTimeout(() => setStatus("idle"), 5000);
@@ -193,13 +185,24 @@ export default function Contacto({ dark, T }) {
   return (
     <section id="contacto" className="sec">
       <div className="c">
-        <Reveal><span className="stag">// Contacto</span></Reveal>
-        <Reveal delay={80}><h2 className="sh2">¿Tienes un <span className="glow-text">proyecto</span>?</h2></Reveal>
-        <Reveal delay={140}><p className="sdesc" style={{ color: T.textSub }}>Disponible para proyectos freelance, colaboraciones y oportunidades interesantes.</p></Reveal>
+        <Reveal><span className="stag">// {t("contact.tag")}</span></Reveal>
+        <Reveal delay={80}>
+          <h2 className="sh2">
+            {t("contact.title")}{" "}
+            <span className="glow-text">{t("contact.titleSpan")}</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={140}>
+          <p className="sdesc" style={{ color: T.textSub }}>
+            {t("contact.sub")}
+          </p>
+        </Reveal>
 
         <Reveal delay={180}>
           <div style={{ marginBottom: 32 }}>
-            <div className={styles.socialLabel} style={{ color: T.textFaint }}>Redes sociales</div>
+            <div className={styles.socialLabel} style={{ color: T.textFaint }}>
+              {t("contact.socialLabel") || "Redes sociales"}
+            </div>
             <div className="social-row">
               {SOCIAL_LINKS.map((s) => (
                 <div key={s.name + "c"} className="social-wrap">
@@ -209,9 +212,11 @@ export default function Contacto({ dark, T }) {
                       onMouseEnter={() => setHovSocial(s.name + "c")}
                       onMouseLeave={() => setHovSocial(null)}
                       style={{
-                        background: hovSocial === s.name + "c" ? s.bg : (dark ? "#0f0f1e" : "#f0eaff"),
+                        background: hovSocial === s.name + "c" ? s.bg : dark ? "#0f0f1e" : "#f0eaff",
                         border: hovSocial === s.name + "c" ? "1.5px solid transparent" : "1.5px solid #7C3AED22",
-                        boxShadow: hovSocial === s.name + "c" ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}` : "none",
+                        boxShadow: hovSocial === s.name + "c"
+                          ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}`
+                          : "none",
                       }}
                     >
                       {s.icon(hovSocial === s.name + "c" ? "#fff" : dark ? "#aaa" : "#6633aa")}
@@ -248,19 +253,24 @@ export default function Contacto({ dark, T }) {
           <div
             className={styles.formWrap}
             style={{
-              background: dark ? "linear-gradient(135deg,#0f0f1e,#12121f)" : "linear-gradient(135deg,#ffffff,#faf5ff)",
+              background: dark
+                ? "linear-gradient(135deg,#0f0f1e,#12121f)"
+                : "linear-gradient(135deg,#ffffff,#faf5ff)",
               border: "1px solid #7C3AED22",
             }}
           >
             <div className={styles.formTop} />
-            <h3 className={styles.formTitle} style={{ color: T.text }}>Envíame un mensaje</h3>
+            <h3 className={styles.formTitle} style={{ color: T.text }}>
+              {t("contact.formTitle") || "Envíame un mensaje"}
+            </h3>
             <p className={styles.formSub} style={{ color: T.textSub }}>
-              Respondo en menos de 24 horas <span className={styles.icon}>{<FaBolt />}</span>
+              {t("contact.sub2") || "Respondo en menos de 24 horas"}{" "}
+              <span className={styles.icon}><FaBolt /></span>
             </p>
 
             <form ref={formRef} onSubmit={handleSubmit} className={styles.form} noValidate>
 
-              {/* 🍯 Honeypot — invisible para humanos */}
+              {/* Honeypot */}
               <div
                 aria-hidden="true"
                 style={{
@@ -282,22 +292,34 @@ export default function Contacto({ dark, T }) {
 
               <div className={styles.row2}>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>Nombre *</label>
+                  <label className={styles.label} style={{ color: T.textFaint }}>
+                    {t("contact.labelName") || "Nombre"} *
+                  </label>
                   <input
                     name="nombre" value={form.nombre} onChange={handleChange}
-                    placeholder="Tu nombre completo"
+                    placeholder={t("contact.namePlaceholder")}
                     className={`${styles.input} ${errors.nombre ? styles.inputError : ""}`}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.nombre ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
+                    style={{
+                      background: dark ? "#0a0a18" : "#f7f4ff",
+                      color: T.text,
+                      borderColor: errors.nombre ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                    }}
                   />
                   {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
                 </div>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>Email *</label>
+                  <label className={styles.label} style={{ color: T.textFaint }}>
+                    {t("contact.labelEmail") || "Email"} *
+                  </label>
                   <input
                     name="email" type="email" value={form.email} onChange={handleChange}
-                    placeholder="tu@email.com"
+                    placeholder={t("contact.emailPlaceholder")}
                     className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.email ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
+                    style={{
+                      background: dark ? "#0a0a18" : "#f7f4ff",
+                      color: T.text,
+                      borderColor: errors.email ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                    }}
                   />
                   {errors.email && <span className={styles.error}>{errors.email}</span>}
                 </div>
@@ -305,38 +327,61 @@ export default function Contacto({ dark, T }) {
 
               <div className={styles.row2}>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>Teléfono / WhatsApp</label>
+                  <label className={styles.label} style={{ color: T.textFaint }}>
+                    {t("contact.labelPhone") || "Teléfono / WhatsApp"}
+                  </label>
                   <input
                     name="telefono" value={form.telefono} onChange={handleChange}
-                    placeholder="+51 999 999 999" className={styles.input}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: dark ? "#7C3AED22" : "#7C3AED18" }}
+                    placeholder="+51 999 999 999"
+                    className={styles.input}
+                    style={{
+                      background: dark ? "#0a0a18" : "#f7f4ff",
+                      color: T.text,
+                      borderColor: dark ? "#7C3AED22" : "#7C3AED18",
+                    }}
                   />
                 </div>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>Tipo de servicio *</label>
+                  <label className={styles.label} style={{ color: T.textFaint }}>
+                    {t("contact.labelService") || "Tipo de servicio"} *
+                  </label>
                   <select
                     name="servicio" value={form.servicio} onChange={handleChange}
                     className={`${styles.input} ${styles.select} ${errors.servicio ? styles.inputError : ""}`}
-                    style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: form.servicio ? T.text : T.textFaint, borderColor: errors.servicio ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
+                    style={{
+                      background: dark ? "#0a0a18" : "#f7f4ff",
+                      color: form.servicio ? T.text : T.textFaint,
+                      borderColor: errors.servicio ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                    }}
                   >
-                    <option value="" disabled>Selecciona un servicio</option>
-                    {SERVICIOS.map((s) => <option key={s} value={s}>{s}</option>)}
+                    <option value="" disabled>
+                      {t("contact.selectService") || "Selecciona un servicio"}
+                    </option>
+                    {SERVICIOS_ES.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
                   </select>
                   {errors.servicio && <span className={styles.error}>{errors.servicio}</span>}
                 </div>
               </div>
 
               <div className={styles.field}>
-                <label className={styles.label} style={{ color: T.textFaint }}>Mensaje *</label>
+                <label className={styles.label} style={{ color: T.textFaint }}>
+                  {t("contact.labelMsg") || "Mensaje"} *
+                </label>
                 <textarea
                   name="mensaje" value={form.mensaje} onChange={handleChange}
-                  placeholder="Cuéntame sobre tu proyecto, qué necesitas y en qué plazo..."
+                  placeholder={t("contact.messagePlaceholder")}
                   rows={5}
                   className={`${styles.input} ${styles.textarea} ${errors.mensaje ? styles.inputError : ""}`}
-                  style={{ background: dark ? "#0a0a18" : "#f7f4ff", color: T.text, borderColor: errors.mensaje ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18" }}
+                  style={{
+                    background: dark ? "#0a0a18" : "#f7f4ff",
+                    color: T.text,
+                    borderColor: errors.mensaje ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                  }}
                 />
                 <div className={styles.charCount} style={{ color: T.textFaint }}>
-                  {form.mensaje.length} caracteres
+                  {form.mensaje.length} {t("contact.chars") || "caracteres"}
                 </div>
                 {errors.mensaje && <span className={styles.error}>{errors.mensaje}</span>}
               </div>
@@ -348,9 +393,9 @@ export default function Contacto({ dark, T }) {
                 style={{ opacity: status === "sending" || isRateLimited ? 0.7 : 1 }}
               >
                 {status === "sending"   && <span className={styles.spinner} />}
-                {status === "idle"      && "Enviar mensaje ✉️"}
-                {status === "sending"   && "Enviando..."}
-                {status === "success"   && "✅ ¡Mensaje enviado!"}
+                {status === "idle"      && `${t("contact.btnSend")} ✉️`}
+                {status === "sending"   && t("contact.btnSending")}
+                {status === "success"   && `✅ ${t("contact.btnSent")}`}
                 {status === "error"     && "❌ Error, intenta de nuevo"}
                 {status === "bot"       && "⏳ Espera un momento..."}
                 {status === "ratelimit" && `⏳ Intenta en ${minutesLeft} min`}
@@ -358,17 +403,17 @@ export default function Contacto({ dark, T }) {
 
               {status === "success" && (
                 <div className={styles.feedback} style={{ background: "#A8EB1218", border: "1px solid #A8EB1244", color: "#A8EB12" }}>
-                  🎉 ¡Gracias! Recibirás respuesta en menos de 24 horas.
+                  🎉 {t("contact.successMsg") || "¡Gracias! Recibirás respuesta en menos de 24 horas."}
                 </div>
               )}
               {status === "error" && (
                 <div className={styles.feedback} style={{ background: "#ef535018", border: "1px solid #ef535044", color: "#ef5350" }}>
-                  Hubo un problema al enviar. Por favor intenta de nuevo o escríbeme por WhatsApp.
+                  {t("contact.errorMsg")}
                 </div>
               )}
               {isRateLimited && (
-                <div className={styles.feedback} style={{ background: "#ffc75f18", border: "1px solid #ffc75f44", color: "#ffc75f" }}>
-                  🚦 Demasiados intentos. Vuelve en {minutesLeft} minuto{minutesLeft !== 1 ? "s" : ""}.
+                <div className={styles.feedback} style={{ background: "#ffc75f18", border: "1px solid #ffc75f44", color: "var(--clr-gold)" }}>
+                  🚦 {t("contact.rateLimit") || `Demasiados intentos. Vuelve en ${minutesLeft} minuto${minutesLeft !== 1 ? "s" : ""}.`}
                 </div>
               )}
             </form>

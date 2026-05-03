@@ -9,20 +9,20 @@ import { FaGithub, FaLinkedin, FaBolt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 // ── EmailJS ────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 // ── Rate Limit ────────────────────────────────────────────────
-const RATE_LIMIT_KEY    = "cc_contact_attempts";
-const RATE_LIMIT_MAX    = 3;
+const RATE_LIMIT_KEY = "cc_contact_attempts";
+const RATE_LIMIT_MAX = 3;
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000;
 
 function checkRateLimit() {
   try {
-    const raw    = localStorage.getItem(RATE_LIMIT_KEY);
-    const now    = Date.now();
-    const list   = raw ? JSON.parse(raw) : [];
+    const raw = localStorage.getItem(RATE_LIMIT_KEY);
+    const now = Date.now();
+    const list = raw ? JSON.parse(raw) : [];
     const recent = list.filter((t) => now - t < RATE_LIMIT_WINDOW);
     if (recent.length >= RATE_LIMIT_MAX) return false;
     localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify([...recent, now]));
@@ -34,9 +34,9 @@ function checkRateLimit() {
 
 function getRemainingMinutes() {
   try {
-    const raw    = localStorage.getItem(RATE_LIMIT_KEY);
-    const now    = Date.now();
-    const list   = raw ? JSON.parse(raw) : [];
+    const raw = localStorage.getItem(RATE_LIMIT_KEY);
+    const now = Date.now();
+    const list = raw ? JSON.parse(raw) : [];
     const recent = list.filter((t) => now - t < RATE_LIMIT_WINDOW);
     if (recent.length < RATE_LIMIT_MAX) return 0;
     const oldest = Math.min(...recent);
@@ -65,16 +65,20 @@ const SERVICIOS_ES = [
 
 export default function Contacto({ dark, T }) {
   const { t } = useLang();
-  const formRef   = useRef(null);
+  const formRef = useRef(null);
   const mountTime = useRef(Date.now());
 
-  const [copied,    setCopied]    = useState(false);
+  const [copied, setCopied] = useState(false);
   const [hovSocial, setHovSocial] = useState(null);
-  const [status,    setStatus]    = useState("idle");
-  const [form,      setForm]      = useState({
-    nombre: "", email: "", telefono: "", servicio: "", mensaje: "",
+  const [status, setStatus] = useState("idle");
+  const [form, setForm] = useState({
+    nombre: "",
+    email: "",
+    telefono: "",
+    servicio: "",
+    mensaje: "",
   });
-  const [errors,   setErrors]   = useState({});
+  const [errors, setErrors] = useState({});
   const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
@@ -88,16 +92,26 @@ export default function Contacto({ dark, T }) {
   };
 
   const contactItems = [
-    { label: "Email",    icon: <MdEmail />,    display: copied ? "✓ Copiado!" : "kodex.crh@proton.me", action: handleCopy },
-    { label: "LinkedIn", icon: <FaLinkedin />, display: "crishtian rodriguez herrera" },
-    { label: "GitHub",   icon: <FaGithub />,   display: "@cloudcoders-C2" },
+    {
+      label: "Email",
+      icon: <MdEmail />,
+      display: copied ? "✓ Copiado!" : "kodex.crh@proton.me",
+      action: handleCopy,
+    },
+    {
+      label: "LinkedIn",
+      icon: <FaLinkedin />,
+      display: "crishtian rodriguez herrera",
+    },
+    { label: "GitHub", icon: <FaGithub />, display: "@kodexcrh" },
   ];
 
   const validateField = (name, value) => {
     switch (name) {
       case "nombre":
         if (!value.trim()) return "El nombre es requerido";
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(value)) return "Solo se permiten letras y espacios";
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(value))
+          return "Solo se permiten letras y espacios";
         if (value.trim().length < 2) return "Mínimo 2 caracteres";
         return "";
       case "email":
@@ -127,8 +141,14 @@ export default function Contacto({ dark, T }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "nombre"   && value !== "" && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]*$/.test(value)) return;
-    if (name === "telefono" && value !== "" && !/^[0-9+\s-]*$/.test(value)) return;
+    if (
+      name === "nombre" &&
+      value !== "" &&
+      !/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]*$/.test(value)
+    )
+      return;
+    if (name === "telefono" && value !== "" && !/^[0-9+\s-]*$/.test(value))
+      return;
     setForm((prev) => ({ ...prev, [name]: value }));
     const err = validateField(name, value);
     setErrors((prev) => ({ ...prev, [name]: err }));
@@ -156,22 +176,36 @@ export default function Contacto({ dark, T }) {
     }
 
     const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
 
     setStatus("sending");
 
     const sanitizedForm = {
-      nombre:   sanitize(form.nombre),
-      email:    sanitize(form.email),
+      nombre: sanitize(form.nombre),
+      email: sanitize(form.email),
       telefono: sanitize(form.telefono),
       servicio: sanitize(form.servicio),
-      mensaje:  sanitize(form.mensaje),
+      mensaje: sanitize(form.mensaje),
     };
 
     try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, sanitizedForm, EMAILJS_PUBLIC_KEY);
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        sanitizedForm,
+        EMAILJS_PUBLIC_KEY,
+      );
       setStatus("success");
-      setForm({ nombre: "", email: "", telefono: "", servicio: "", mensaje: "" });
+      setForm({
+        nombre: "",
+        email: "",
+        telefono: "",
+        servicio: "",
+        mensaje: "",
+      });
       setTimeout(() => setStatus("idle"), 5000);
     } catch {
       setStatus("error");
@@ -180,12 +214,14 @@ export default function Contacto({ dark, T }) {
   };
 
   const isRateLimited = status === "ratelimit";
-  const minutesLeft   = isRateLimited ? getRemainingMinutes() : 0;
+  const minutesLeft = isRateLimited ? getRemainingMinutes() : 0;
 
   return (
     <section id="contacto" className="sec">
       <div className="c">
-        <Reveal><span className="stag">// {t("contact.tag")}</span></Reveal>
+        <Reveal>
+          <span className="stag">// {t("contact.tag")}</span>
+        </Reveal>
         <Reveal delay={80}>
           <h2 className="sh2">
             {t("contact.title")}{" "}
@@ -206,20 +242,40 @@ export default function Contacto({ dark, T }) {
             <div className="social-row">
               {SOCIAL_LINKS.map((s) => (
                 <div key={s.name + "c"} className="social-wrap">
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: "none" }}
+                  >
                     <button
                       className="social-btn"
                       onMouseEnter={() => setHovSocial(s.name + "c")}
                       onMouseLeave={() => setHovSocial(null)}
                       style={{
-                        background: hovSocial === s.name + "c" ? s.bg : dark ? "#0f0f1e" : "#f0eaff",
-                        border: hovSocial === s.name + "c" ? "1.5px solid transparent" : "1.5px solid #7C3AED22",
-                        boxShadow: hovSocial === s.name + "c"
-                          ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}`
-                          : "none",
+                        background:
+                          hovSocial === s.name + "c"
+                            ? s.bg
+                            : dark
+                              ? "#0f0f1e"
+                              : "#f0eaff",
+                        border:
+                          hovSocial === s.name + "c"
+                            ? "1.5px solid transparent"
+                            : "1.5px solid #7C3AED22",
+                        boxShadow:
+                          hovSocial === s.name + "c"
+                            ? `0 12px 32px ${typeof s.bg === "string" ? s.bg + "55" : "rgba(124,58,237,.3)"}`
+                            : "none",
                       }}
                     >
-                      {s.icon(hovSocial === s.name + "c" ? "#fff" : dark ? "#aaa" : "#6633aa")}
+                      {s.icon(
+                        hovSocial === s.name + "c"
+                          ? "#fff"
+                          : dark
+                            ? "#aaa"
+                            : "#6633aa",
+                      )}
                     </button>
                   </a>
                   <span className="social-tooltip">{s.name}</span>
@@ -235,12 +291,20 @@ export default function Contacto({ dark, T }) {
               <div className="card-hover-wrap">
                 <div
                   className={styles.card}
-                  style={{ background: T.bgCard2, cursor: item.action ? "pointer" : "default" }}
+                  style={{
+                    background: T.bgCard2,
+                    cursor: item.action ? "pointer" : "default",
+                  }}
                   onClick={item.action}
                 >
                   <span className={styles.cardIcon}>{item.icon}</span>
                   <div style={{ minWidth: 0 }}>
-                    <div className={styles.cardLabel} style={{ color: T.textFaint }}>{item.label}</div>
+                    <div
+                      className={styles.cardLabel}
+                      style={{ color: T.textFaint }}
+                    >
+                      {item.label}
+                    </div>
                     <div className={styles.cardValue}>{item.display}</div>
                   </div>
                 </div>
@@ -265,17 +329,29 @@ export default function Contacto({ dark, T }) {
             </h3>
             <p className={styles.formSub} style={{ color: T.textSub }}>
               {t("contact.sub2") || "Respondo en menos de 24 horas"}{" "}
-              <span className={styles.icon}><FaBolt /></span>
+              <span className={styles.icon}>
+                <FaBolt />
+              </span>
             </p>
 
-            <form ref={formRef} onSubmit={handleSubmit} className={styles.form} noValidate>
-
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className={styles.form}
+              noValidate
+            >
               {/* Honeypot */}
               <div
                 aria-hidden="true"
                 style={{
-                  position: "absolute", left: "-9999px", top: "-9999px",
-                  width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none",
+                  position: "absolute",
+                  left: "-9999px",
+                  top: "-9999px",
+                  width: 0,
+                  height: 0,
+                  overflow: "hidden",
+                  opacity: 0,
+                  pointerEvents: "none",
                 }}
               >
                 <label htmlFor="cc_website">Website</label>
@@ -292,46 +368,74 @@ export default function Contacto({ dark, T }) {
 
               <div className={styles.row2}>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>
+                  <label
+                    className={styles.label}
+                    style={{ color: T.textFaint }}
+                  >
                     {t("contact.labelName") || "Nombre"} *
                   </label>
                   <input
-                    name="nombre" value={form.nombre} onChange={handleChange}
+                    name="nombre"
+                    value={form.nombre}
+                    onChange={handleChange}
                     placeholder={t("contact.namePlaceholder")}
                     className={`${styles.input} ${errors.nombre ? styles.inputError : ""}`}
                     style={{
                       background: dark ? "#0a0a18" : "#f7f4ff",
                       color: T.text,
-                      borderColor: errors.nombre ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                      borderColor: errors.nombre
+                        ? "#ef5350"
+                        : dark
+                          ? "#7C3AED22"
+                          : "#7C3AED18",
                     }}
                   />
-                  {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
+                  {errors.nombre && (
+                    <span className={styles.error}>{errors.nombre}</span>
+                  )}
                 </div>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>
+                  <label
+                    className={styles.label}
+                    style={{ color: T.textFaint }}
+                  >
                     {t("contact.labelEmail") || "Email"} *
                   </label>
                   <input
-                    name="email" type="email" value={form.email} onChange={handleChange}
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
                     placeholder={t("contact.emailPlaceholder")}
                     className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
                     style={{
                       background: dark ? "#0a0a18" : "#f7f4ff",
                       color: T.text,
-                      borderColor: errors.email ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                      borderColor: errors.email
+                        ? "#ef5350"
+                        : dark
+                          ? "#7C3AED22"
+                          : "#7C3AED18",
                     }}
                   />
-                  {errors.email && <span className={styles.error}>{errors.email}</span>}
+                  {errors.email && (
+                    <span className={styles.error}>{errors.email}</span>
+                  )}
                 </div>
               </div>
 
               <div className={styles.row2}>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>
+                  <label
+                    className={styles.label}
+                    style={{ color: T.textFaint }}
+                  >
                     {t("contact.labelPhone") || "Teléfono / WhatsApp"}
                   </label>
                   <input
-                    name="telefono" value={form.telefono} onChange={handleChange}
+                    name="telefono"
+                    value={form.telefono}
+                    onChange={handleChange}
                     placeholder="+51 999 999 999"
                     className={styles.input}
                     style={{
@@ -342,26 +446,39 @@ export default function Contacto({ dark, T }) {
                   />
                 </div>
                 <div className={styles.field}>
-                  <label className={styles.label} style={{ color: T.textFaint }}>
+                  <label
+                    className={styles.label}
+                    style={{ color: T.textFaint }}
+                  >
                     {t("contact.labelService") || "Tipo de servicio"} *
                   </label>
                   <select
-                    name="servicio" value={form.servicio} onChange={handleChange}
+                    name="servicio"
+                    value={form.servicio}
+                    onChange={handleChange}
                     className={`${styles.input} ${styles.select} ${errors.servicio ? styles.inputError : ""}`}
                     style={{
                       background: dark ? "#0a0a18" : "#f7f4ff",
                       color: form.servicio ? T.text : T.textFaint,
-                      borderColor: errors.servicio ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                      borderColor: errors.servicio
+                        ? "#ef5350"
+                        : dark
+                          ? "#7C3AED22"
+                          : "#7C3AED18",
                     }}
                   >
                     <option value="" disabled>
                       {t("contact.selectService") || "Selecciona un servicio"}
                     </option>
                     {SERVICIOS_ES.map((s) => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
                     ))}
                   </select>
-                  {errors.servicio && <span className={styles.error}>{errors.servicio}</span>}
+                  {errors.servicio && (
+                    <span className={styles.error}>{errors.servicio}</span>
+                  )}
                 </div>
               </div>
 
@@ -370,50 +487,88 @@ export default function Contacto({ dark, T }) {
                   {t("contact.labelMsg") || "Mensaje"} *
                 </label>
                 <textarea
-                  name="mensaje" value={form.mensaje} onChange={handleChange}
+                  name="mensaje"
+                  value={form.mensaje}
+                  onChange={handleChange}
                   placeholder={t("contact.messagePlaceholder")}
                   rows={5}
                   className={`${styles.input} ${styles.textarea} ${errors.mensaje ? styles.inputError : ""}`}
                   style={{
                     background: dark ? "#0a0a18" : "#f7f4ff",
                     color: T.text,
-                    borderColor: errors.mensaje ? "#ef5350" : dark ? "#7C3AED22" : "#7C3AED18",
+                    borderColor: errors.mensaje
+                      ? "#ef5350"
+                      : dark
+                        ? "#7C3AED22"
+                        : "#7C3AED18",
                   }}
                 />
-                <div className={styles.charCount} style={{ color: T.textFaint }}>
+                <div
+                  className={styles.charCount}
+                  style={{ color: T.textFaint }}
+                >
                   {form.mensaje.length} {t("contact.chars") || "caracteres"}
                 </div>
-                {errors.mensaje && <span className={styles.error}>{errors.mensaje}</span>}
+                {errors.mensaje && (
+                  <span className={styles.error}>{errors.mensaje}</span>
+                )}
               </div>
 
               <button
                 type="submit"
                 className={`btn-p ${styles.submitBtn}`}
                 disabled={status === "sending" || isRateLimited}
-                style={{ opacity: status === "sending" || isRateLimited ? 0.7 : 1 }}
+                style={{
+                  opacity: status === "sending" || isRateLimited ? 0.7 : 1,
+                }}
               >
-                {status === "sending"   && <span className={styles.spinner} />}
-                {status === "idle"      && `${t("contact.btnSend")} ✉️`}
-                {status === "sending"   && t("contact.btnSending")}
-                {status === "success"   && `✅ ${t("contact.btnSent")}`}
-                {status === "error"     && "❌ Error, intenta de nuevo"}
-                {status === "bot"       && "⏳ Espera un momento..."}
+                {status === "sending" && <span className={styles.spinner} />}
+                {status === "idle" && `${t("contact.btnSend")} ✉️`}
+                {status === "sending" && t("contact.btnSending")}
+                {status === "success" && `✅ ${t("contact.btnSent")}`}
+                {status === "error" && "❌ Error, intenta de nuevo"}
+                {status === "bot" && "⏳ Espera un momento..."}
                 {status === "ratelimit" && `⏳ Intenta en ${minutesLeft} min`}
               </button>
 
               {status === "success" && (
-                <div className={styles.feedback} style={{ background: "#A8EB1218", border: "1px solid #A8EB1244", color: "#A8EB12" }}>
-                  🎉 {t("contact.successMsg") || "¡Gracias! Recibirás respuesta en menos de 24 horas."}
+                <div
+                  className={styles.feedback}
+                  style={{
+                    background: "#A8EB1218",
+                    border: "1px solid #A8EB1244",
+                    color: "#A8EB12",
+                  }}
+                >
+                  🎉{" "}
+                  {t("contact.successMsg") ||
+                    "¡Gracias! Recibirás respuesta en menos de 24 horas."}
                 </div>
               )}
               {status === "error" && (
-                <div className={styles.feedback} style={{ background: "#ef535018", border: "1px solid #ef535044", color: "#ef5350" }}>
+                <div
+                  className={styles.feedback}
+                  style={{
+                    background: "#ef535018",
+                    border: "1px solid #ef535044",
+                    color: "#ef5350",
+                  }}
+                >
                   {t("contact.errorMsg")}
                 </div>
               )}
               {isRateLimited && (
-                <div className={styles.feedback} style={{ background: "#ffc75f18", border: "1px solid #ffc75f44", color: "var(--clr-gold)" }}>
-                  🚦 {t("contact.rateLimit") || `Demasiados intentos. Vuelve en ${minutesLeft} minuto${minutesLeft !== 1 ? "s" : ""}.`}
+                <div
+                  className={styles.feedback}
+                  style={{
+                    background: "#ffc75f18",
+                    border: "1px solid #ffc75f44",
+                    color: "var(--clr-gold)",
+                  }}
+                >
+                  🚦{" "}
+                  {t("contact.rateLimit") ||
+                    `Demasiados intentos. Vuelve en ${minutesLeft} minuto${minutesLeft !== 1 ? "s" : ""}.`}
                 </div>
               )}
             </form>
